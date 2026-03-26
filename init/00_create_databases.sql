@@ -1,0 +1,2 @@
+CREATE DATABASE IF NOT EXISTS lc_aibi CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE IF NOT EXISTS textile_tcm_demo CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
