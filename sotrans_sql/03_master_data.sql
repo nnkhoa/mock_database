@@ -1,6 +1,7 @@
 -- SOTRANS Demo Database — Master Data
 
 USE `sotrans_demo`;
+SET FOREIGN_KEY_CHECKS=0;
 
 
 -- service_types (5 rows)
@@ -90,3 +91,5 @@ INSERT INTO `annual_targets` (`target_id`,`fiscal_year`,`service_type_id`,`targe
 (8,2024,3,490000000000,171500000000),
 (9,2024,4,270000000000,45900000000),
 (10,2024,5,80000000000,17600000000);
+
+SET FOREIGN_KEY_CHECKS=1;

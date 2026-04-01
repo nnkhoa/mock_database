@@ -1,6 +1,7 @@
 -- SOTRANS Demo Database — Metadata
 
 USE `sotrans_demo`;
+SET FOREIGN_KEY_CHECKS=0;
 
 
 -- _meta_tables

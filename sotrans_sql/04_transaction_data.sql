@@ -1,6 +1,7 @@
 -- SOTRANS Demo Database — Transaction Data
 
 USE `sotrans_demo`;
+SET FOREIGN_KEY_CHECKS=0;
 
 
 -- freight_shipments (3134 rows)
@@ -8359,3 +8360,5 @@ INSERT INTO `inland_waterway_trips` (`trip_id`,`trip_date`,`customer_id`,`origin
 (4358,'2024-09-20',7,1,4,346.24,158154028,133625945),
 (4359,'2024-09-07',11,1,3,384.69,48577072,40295376),
 (4360,'2024-09-14',11,3,4,753.62,73793872,60223120);
+
+SET FOREIGN_KEY_CHECKS=1;
