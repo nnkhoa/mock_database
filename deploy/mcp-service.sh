@@ -4,7 +4,7 @@
 set -euo pipefail
 
 PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-SERVICE="supergateway-lc.service"
+SERVICE="supergateway-lc"
 CUSTOMER="${1:-}"
 
 if [ -z "$CUSTOMER" ]; then
