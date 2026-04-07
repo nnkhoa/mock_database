@@ -3,7 +3,7 @@
 -- AP Saigon Petro — Master/Dimension Data
 -- ============================================================
 
-USE lubricants_demo;
+USE ap_saigon_petro_demo;
 
 SET FOREIGN_KEY_CHECKS = 0;
 

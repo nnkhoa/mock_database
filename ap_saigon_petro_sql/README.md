@@ -4,7 +4,7 @@
 Database demo cho **Công ty CP AP Saigon Petro** — ngành dầu nhớt (lubricants).  
 Dữ liệu mock phục vụ demo AI engine (Claude via MCP) cho CEO/Board.
 
-- **Database:** `lubricants_demo`
+- **Database:** `ap_saigon_petro_demo`
 - **Engine:** MySQL 8.0 (utf8mb4)
 - **Data range:** 10/2024 – 03/2026 (18 tháng)
 - **4 brands:** Saigon Petro, AP OIL, Sino, Polaris
@@ -25,7 +25,7 @@ Dữ liệu mock phục vụ demo AI engine (Claude via MCP) cho CEO/Board.
 # 1. Khởi tạo MySQL container
 docker run --name mock_database \
   -e MYSQL_ROOT_PASSWORD=root \
-  -e MYSQL_DATABASE=lubricants_demo \
+  -e MYSQL_DATABASE=ap_saigon_petro_demo \
   -p 3306:3306 \
   -d mysql:8.0 \
   --character-set-server=utf8mb4 \
@@ -45,7 +45,7 @@ docker exec -i mock_database mysql -uroot -proot < ap_saigon_petro_sql/05_valida
 
 # 5. Reset (nếu cần làm lại)
 docker exec -i mock_database mysql -uroot -proot -e \
-  "DROP DATABASE IF EXISTS lubricants_demo; CREATE DATABASE lubricants_demo CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+  "DROP DATABASE IF EXISTS ap_saigon_petro_demo; CREATE DATABASE ap_saigon_petro_demo CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 # Rồi chạy lại bước 3-4
 ```
 

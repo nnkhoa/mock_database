@@ -1,14 +1,15 @@
--- ============================================================
--- 01_ddl_schema.sql
--- AP Saigon Petro — Lubricants Demo Database
--- DDL: CREATE DATABASE, CREATE TABLES, INDEXES, CONSTRAINTS
--- ============================================================
+-- ============================================================================
+-- AP Saigon Petro — Lubricants Demo Database - DDL Schema
+-- Mo ta: Tao database, tables, indexes, constraints
+-- Database: ap_saigon_petro_demo
+-- Encoding: UTF-8 (utf8mb4)
+-- ============================================================================
 
-CREATE DATABASE IF NOT EXISTS lubricants_demo
+CREATE DATABASE IF NOT EXISTS ap_saigon_petro_demo
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
 
-USE lubricants_demo;
+USE ap_saigon_petro_demo;
 
 -- ============================================================
 -- DIMENSION TABLES

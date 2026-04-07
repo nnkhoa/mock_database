@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Export transaction/fact table data from lubricants_demo MySQL database
+Export transaction/fact table data from ap_saigon_petro_demo MySQL database
 into 04_transaction_data.sql with batch INSERT statements.
 """
 
@@ -15,7 +15,7 @@ DB_CONFIG = {
     "port": 3306,
     "user": "root",
     "password": "root",
-    "database": "lubricants_demo",
+    "database": "ap_saigon_petro_demo",
 }
 
 TABLES = ["raw_material_costs", "production_batches", "sales_orders", "payments"]
@@ -127,7 +127,7 @@ def main():
         f.write(f"-- Generated: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
         f.write("-- ============================================================\n\n")
 
-        f.write("USE lubricants_demo;\n\n")
+        f.write("USE ap_saigon_petro_demo;\n\n")
         f.write("SET FOREIGN_KEY_CHECKS = 0;\n")
 
         for table in TABLES:

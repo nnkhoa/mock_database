@@ -2,7 +2,7 @@
 -- 02_metadata.sql
 -- AP Saigon Petro — Metadata for AI engine understanding
 -- ============================================================
-USE lubricants_demo;
+USE ap_saigon_petro_demo;
 
 -- ============================================================
 -- _meta_tables

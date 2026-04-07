@@ -4,7 +4,7 @@
 -- Run after populating data to verify integrity & anomalies
 -- ============================================================
 
-USE lubricants_demo;
+USE ap_saigon_petro_demo;
 
 -- ============================================================
 -- SECTION 1: TECHNICAL VALIDATION
