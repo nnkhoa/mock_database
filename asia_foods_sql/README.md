@@ -1,4 +1,4 @@
-# Asia Foods — instant_noodle_demo
+# Asia Foods — asia_foods_demo
 
 MySQL demo database for an instant noodle manufacturer with 5 factories across Vietnam.
 
@@ -18,7 +18,7 @@ MySQL demo database for an instant noodle manufacturer with 5 factories across V
 # 1. Start MySQL container
 docker run --name mock_database \
   -e MYSQL_ROOT_PASSWORD=root \
-  -e MYSQL_DATABASE=instant_noodle_demo \
+  -e MYSQL_DATABASE=asia_foods_demo \
   -p 3306:3306 \
   -d mysql:8.0 \
   --character-set-server=utf8mb4 \
@@ -38,7 +38,7 @@ docker exec -i mock_database mysql -uroot -proot < asia_foods_sql/05_validation_
 
 # 5. Reset
 docker exec -i mock_database mysql -uroot -proot -e \
-  "DROP DATABASE IF EXISTS instant_noodle_demo; CREATE DATABASE instant_noodle_demo CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+  "DROP DATABASE IF EXISTS asia_foods_demo; CREATE DATABASE asia_foods_demo CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 ```
 
 ## Encoding
