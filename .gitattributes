@@ -1,1 +1,2 @@
 sasco_sql/04_transaction_data.sql filter=lfs diff=lfs merge=lfs -text
+*.sql filter=lfs diff=lfs merge=lfs -text
