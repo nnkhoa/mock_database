@@ -1468,10 +1468,10 @@ class CanifaGenerator:
 
         # Split sales into 2 files to stay under GitHub 100MB limit
         tx_files = [
-            (['04a_sales_1.sql', '04a_sales_2.sql'], 'sales_transactions'),
-            (['04b_returns.sql'], 'returns'),
-            (['04c_inventory.sql'], 'inventory_snapshots'),
-            (['04d_store_costs.sql'], 'store_costs'),
+            (['04_a_sales_1.sql', '04_a_sales_2.sql'], 'sales_transactions'),
+            (['04_b_returns.sql'], 'returns'),
+            (['04_c_inventory.sql'], 'inventory_snapshots'),
+            (['04_d_store_costs.sql'], 'store_costs'),
         ]
         for fnames, tbl in tx_files:
             cur.execute(f"SELECT COUNT(*) FROM `{tbl}`")
@@ -1674,11 +1674,11 @@ docker exec canifa_demo mysqladmin ping -uroot -proot --wait=30
 docker exec -i canifa_demo mysql -uroot -proot < canifa_sql/01_ddl_schema.sql
 docker exec -i canifa_demo mysql -uroot -proot < canifa_sql/02_metadata.sql
 docker exec -i canifa_demo mysql -uroot -proot < canifa_sql/03_master_data.sql
-docker exec -i canifa_demo mysql -uroot -proot < canifa_sql/04a_sales_1.sql
-docker exec -i canifa_demo mysql -uroot -proot < canifa_sql/04a_sales_2.sql
-docker exec -i canifa_demo mysql -uroot -proot < canifa_sql/04b_returns.sql
-docker exec -i canifa_demo mysql -uroot -proot < canifa_sql/04c_inventory.sql
-docker exec -i canifa_demo mysql -uroot -proot < canifa_sql/04d_store_costs.sql
+docker exec -i canifa_demo mysql -uroot -proot < canifa_sql/04_a_sales_1.sql
+docker exec -i canifa_demo mysql -uroot -proot < canifa_sql/04_a_sales_2.sql
+docker exec -i canifa_demo mysql -uroot -proot < canifa_sql/04_b_returns.sql
+docker exec -i canifa_demo mysql -uroot -proot < canifa_sql/04_c_inventory.sql
+docker exec -i canifa_demo mysql -uroot -proot < canifa_sql/04_d_store_costs.sql
 
 # 4. Verify
 docker exec -i canifa_demo mysql -uroot -proot < canifa_sql/05_validation_queries.sql

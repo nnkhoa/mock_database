@@ -53,7 +53,7 @@ fi
 
 echo "Populating from $SQL_DIR ..."
 
-for sql_file in "$SQL_DIR"/0[1-4]*.sql; do
+for sql_file in "$SQL_DIR"/0{1,2,3,4}_*.sql; do
   [ ! -f "$sql_file" ] && continue
   filename=$(basename "$sql_file")
   docker exec -i "$CONTAINER" mysql -u"$MYSQL_USER" -p"$MYSQL_PASS" < "$sql_file" 2>/dev/null
