@@ -1,5 +1,6 @@
 -- ============================================================
 -- 01_ddl_schema.sql
+-- Database: canifa_retail_demo
 -- CANIFA Retail Fashion — Schema Definition
 -- ============================================================
 

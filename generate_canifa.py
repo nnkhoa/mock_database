@@ -1411,6 +1411,7 @@ class CanifaGenerator:
         with open(os.path.join(SQL_DIR, '01_ddl_schema.sql'), 'w', encoding='utf-8') as f:
             f.write("-- ============================================================\n")
             f.write("-- 01_ddl_schema.sql\n")
+            f.write("-- Database: canifa_retail_demo\n")
             f.write("-- CANIFA Retail Fashion — Schema Definition\n")
             f.write("-- ============================================================\n\n")
             f.write(DDL_SQL)
