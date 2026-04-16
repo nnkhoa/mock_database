@@ -757,11 +757,12 @@ for i, ev in enumerate(NEWS_EVENTS_RAW):
 # =============================================================================
 # DDL
 # =============================================================================
-DDL_SQL = f"""-- =============================================================================
--- 01_ddl_schema.sql  |  Database: {DB_NAME}
+DDL_SQL = f"""-- ============================================================
+-- 01_ddl_schema.sql
+-- Database: {DB_NAME}
 -- Gemadept BI Demo — MKT Manager persona
 -- Schema: 12 data tables + 4 metadata tables
--- =============================================================================
+-- ============================================================
 
 DROP DATABASE IF EXISTS `{DB_NAME}`;
 CREATE DATABASE `{DB_NAME}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

@@ -1,8 +1,9 @@
--- =============================================================================
--- 01_ddl_schema.sql  |  Database: gemadept_bi_demo
+-- ============================================================
+-- 01_ddl_schema.sql
+-- Database: gemadept_bi_demo
 -- Gemadept BI Demo — MKT Manager persona
 -- Schema: 12 data tables + 4 metadata tables
--- =============================================================================
+-- ============================================================
 
 DROP DATABASE IF EXISTS `gemadept_bi_demo`;
 CREATE DATABASE `gemadept_bi_demo` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
