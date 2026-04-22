@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"git merge --abort\",\"description\":\"Abort the failed merge\"}",
+  "error": "Exit code 128\nerror: Entry 'canifa_sql/01_ddl_schema.sql' not uptodate. Cannot merge.\nfatal: Could not reset index file to revision 'HEAD'.",
+  "timestamp": "2026-04-22T08:20:14.221Z",
+  "retry_count": 1
+}
