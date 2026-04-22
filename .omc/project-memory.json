@@ -1,0 +1,195 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1776228541595,
+  "projectRoot": "/Users/khoanguyen/Workspace/git/mock_database",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "ap_saigon_petro_sql": {
+      "path": "ap_saigon_petro_sql",
+      "purpose": null,
+      "fileCount": 7,
+      "lastAccessed": 1776228541584,
+      "keyFiles": [
+        "01_ddl_schema.sql",
+        "02_metadata.sql",
+        "03_master_data.sql",
+        "04_transaction_data.sql",
+        "05_validation_queries.sql"
+      ]
+    },
+    "asia_foods_sql": {
+      "path": "asia_foods_sql",
+      "purpose": null,
+      "fileCount": 6,
+      "lastAccessed": 1776228541584,
+      "keyFiles": [
+        "01_ddl_schema.sql",
+        "02_metadata.sql",
+        "03_master_data.sql",
+        "04_transaction_data.sql",
+        "05_validation_queries.sql"
+      ]
+    },
+    "bim_group_sql": {
+      "path": "bim_group_sql",
+      "purpose": null,
+      "fileCount": 7,
+      "lastAccessed": 1776228541585,
+      "keyFiles": [
+        "01_ddl_schema.sql",
+        "02_metadata.sql",
+        "03_master_data.sql",
+        "04_transaction_data.sql",
+        "05_validation_queries.sql"
+      ]
+    },
+    "deploy": {
+      "path": "deploy",
+      "purpose": null,
+      "fileCount": 3,
+      "lastAccessed": 1776228541585,
+      "keyFiles": [
+        "install-service.sh",
+        "mcp-service.sh"
+      ]
+    },
+    "init": {
+      "path": "init",
+      "purpose": null,
+      "fileCount": 7,
+      "lastAccessed": 1776228541586,
+      "keyFiles": [
+        "00_create_databases.sql",
+        "01_lc_aibi_schema.sql",
+        "02_lc_aibi_data.sql",
+        "03_tcm_schema.sql",
+        "04_tcm_data.sql"
+      ]
+    },
+    "kn_holdings_sql": {
+      "path": "kn_holdings_sql",
+      "purpose": null,
+      "fileCount": 6,
+      "lastAccessed": 1776228541586,
+      "keyFiles": [
+        "01_ddl_schema.sql",
+        "02_metadata.sql",
+        "03_master_data.sql",
+        "04_transaction_data.sql",
+        "05_validation.sql"
+      ]
+    },
+    "lam_son_sql": {
+      "path": "lam_son_sql",
+      "purpose": null,
+      "fileCount": 6,
+      "lastAccessed": 1776228541586,
+      "keyFiles": [
+        "01_ddl_schema.sql",
+        "02_metadata.sql",
+        "03_master_data.sql",
+        "04_transaction_data.sql",
+        "05_validation_queries.sql"
+      ]
+    },
+    "nova_consumer_sql": {
+      "path": "nova_consumer_sql",
+      "purpose": null,
+      "fileCount": 6,
+      "lastAccessed": 1776228541587,
+      "keyFiles": [
+        "01_ddl_schema.sql",
+        "02_metadata.sql",
+        "03_master_data.sql",
+        "04_transaction_data.sql",
+        "05_validation_queries.sql"
+      ]
+    },
+    "ptscmc_sql": {
+      "path": "ptscmc_sql",
+      "purpose": null,
+      "fileCount": 5,
+      "lastAccessed": 1776228541587,
+      "keyFiles": [
+        "01_ddl_schema.sql",
+        "02_metadata.sql",
+        "03_master_data.sql",
+        "04_transaction_data.sql",
+        "05_validation_queries.sql"
+      ]
+    },
+    "sasco_sql": {
+      "path": "sasco_sql",
+      "purpose": null,
+      "fileCount": 10,
+      "lastAccessed": 1776228541587,
+      "keyFiles": [
+        "01_ddl_schema.sql",
+        "02_metadata.sql",
+        "03_master_data.sql",
+        "04_transaction_data.sql",
+        "05_validation_queries.sql"
+      ]
+    },
+    "sotrans_sql": {
+      "path": "sotrans_sql",
+      "purpose": null,
+      "fileCount": 6,
+      "lastAccessed": 1776228541587,
+      "keyFiles": [
+        "01_ddl_schema.sql",
+        "02_metadata.sql",
+        "03_master_data.sql",
+        "04_transaction_data.sql",
+        "05_validation_queries.sql"
+      ]
+    },
+    "trasas_sql": {
+      "path": "trasas_sql",
+      "purpose": null,
+      "fileCount": 6,
+      "lastAccessed": 1776228541588,
+      "keyFiles": [
+        "01_ddl_schema.sql",
+        "02_metadata.sql",
+        "03_master_data.sql",
+        "04_transaction_data.sql",
+        "05_validation_queries.sql"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "",
+      "accessCount": 1,
+      "lastAccessed": 1776839646695,
+      "type": "directory"
+    }
+  ],
+  "userDirectives": []
+}

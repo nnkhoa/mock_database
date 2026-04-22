@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top 5 Vaccine Products by Revenue</title>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background: #f5f7fa; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; margin-bottom: 10px; }
+        .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
+        .metric-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; text-align: center; }
+        .metric-card h3 { font-size: 28px; margin: 0; }
+        .metric-card p { margin: 5px 0 0; opacity: 0.9; }
+        #chart { height: 500px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💉 Top 5 Vaccine Products by Revenue</h1>
+        <div class="summary">
+            <div class="metric-card">
+                <h3 id="totalRevenue">0</h3>
+                <p>Total Revenue (VND)</p>
+            </div>
+            <div class="metric-card">
+                <h3 id="totalQty">0</h3>
+                <p>Total Quantity</p>
+            </div>
+            <div class="metric-card">
+                <h3 id="avgPrice">0</h3>
+                <p>Avg Price per Unit</p>
+            </div>
+        </div>
+        <div id="chart"></div>
+    </div>
+
+    <script>
+        const data = [
+            { product: "SHINGRIX", disease: "ZONA THẦN KINH", revenue: 2820689000, qty: 595 },
+            { product: "QDENGA", disease: "SỐT XUẤT HUYẾT", revenue: 2737442000, qty: 1686 },
+            { product: "GARDASIL 9 0.5ML", disease: "UNG THƯ HPV 9 CHỦNG", revenue: 1914558000, qty: 570 },
+            { product: "SPEEDA", disease: "DẠI", revenue: 1458135000, qty: 2511 },
+            { product: "ABRYSVO", disease: "RSV", revenue: 1156952000, qty: 305 }
+        ];
+
+        // Calculate metrics
+        const totalRev = data.reduce((sum, d) => sum + d.revenue, 0);
+        const totalQty = data.reduce((sum, d) => sum + d.qty, 0);
+        document.getElementById('totalRevenue').textContent = (totalRev / 1e9).toFixed(2) + 'B';
+        document.getElementById('totalQty').textContent = totalQty.toLocaleString();
+        document.getElementById('avgPrice').textContent = (totalRev / totalQty / 1e6).toFixed(1) + 'M';
+
+        // Create chart
+        const trace1 = {
+            x: data.map(d => d.product),
+            y: data.map(d => d.revenue / 1e6),
+            name: 'Revenue (M VND)',
+            type: 'bar',
+            marker: { color: '#667eea' },
+            text: data.map(d => (d.revenue / 1e9).toFixed(2) + 'B'),
+            textposition: 'outside'
+        };
+
+        const trace2 = {
+            x: data.map(d => d.product),
+            y: data.map(d => d.qty),
+            name: 'Quantity',
+            type: 'scatter',
+            mode: 'lines+markers',
+            yaxis: 'y2',
+            marker: { color: '#f093fb', size: 12 },
+            line: { color: '#f093fb', width: 3 }
+        };
+
+        const layout = {
+            title: { text: 'Revenue vs Quantity by Product', font: { size: 18 } },
+            xaxis: { title: 'Product Name' },
+            yaxis: { title: 'Revenue (M VND)', titlefont: { color: '#667eea' }, tickfont: { color: '#667eea' } },
+            yaxis2: { title: 'Quantity', titlefont: { color: '#f093fb' }, tickfont: { color: '#f093fb' }, overlaying: 'y', side: 'right' },
+            barmode: 'group',
+            hovermode: 'x unified',
+            plot_bgcolor: '#fafafa',
+            paper_bgcolor: 'white',
+            margin: { l: 60, r: 60, t: 60, b: 100 }
+        };
+
+        Plotly.newPlot('chart', [trace1, trace2], layout, { responsive: true });
+    </script>
+</body>
+</html>
