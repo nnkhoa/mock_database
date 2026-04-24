@@ -1,0 +1,83 @@
+-- 02_metadata.sql — Traphaco Demo metadata tables
+USE `traphaco_demo`;
+
+INSERT INTO `_meta_tables` (`table_name`, `description_vi`, `description_en`, `business_context`) VALUES
+('dim_calendar', 'Bảng lịch ngày 2022-12 → 2025-03', 'Calendar dimension', 'Cờ Tết âm/lễ VN, tet_offset cho phân tích mùa Tết'),
+('dim_region', '3 miền địa lý', '3 geographical regions', 'Bắc/Trung/Nam'),
+('dim_branch', '28 chi nhánh Traphaco', '28 branches', 'size_weight phục vụ phân tích Pareto'),
+('dim_product', '~130 SKU theo strategic_tier', '~130 SKUs by tier', 'raw_material_primary + dependency_pct phục vụ what-if shortage'),
+('dim_customer', '~500 customers', '~500 customers', 'Tier A/B/C theo doanh số; chain_name cho chuỗi hiện đại'),
+('dim_channel', '4 kênh phân phối', '4 channels', 'OTC truyền thống / OTC chuỗi / ETC / Xuất khẩu'),
+('dim_tdv', '~620 trình dược viên', '~620 medical reps', 'specialty đông/tân/hỗn hợp'),
+('dim_hospital', '~200 bệnh viện', '~200 hospitals', 'tier TW/Tỉnh/Huyện/CK/Tư nhân'),
+('dim_raw_material', '~15 nguyên liệu chính', '~15 raw materials', 'Dược liệu nội vs API nhập khẩu'),
+('fact_sales', 'Transaction-level sales 24m', 'Transaction sales', 'Grain: 1 line item per order; ~250-350K rows'),
+('fact_inventory_snapshot', 'Snapshot tồn kho cuối tháng', 'Monthly inventory', 'days_on_hand đã pre-compute'),
+('fact_plan_actual', 'Kế hoạch vs thực tế hàng tháng', 'Plan vs actual', 'metric: revenue/profit/cogs'),
+('fact_tender', 'Hồ sơ đấu thầu BV', 'Hospital tenders', 'Status: submitting/pending/won/lost'),
+('fact_tender_delivery', 'Batch giao hàng tender', 'Tender deliveries', 'Sum delivered / contracted = delivery_rate'),
+('fact_raw_material_price', 'Giá nguyên liệu hàng tháng', 'Monthly material price', '24m × 15 materials');
+
+INSERT INTO `_meta_columns` (`table_name`, `column_name`, `data_type`, `description_vi`, `description_en`, `unit`, `example_values`) VALUES
+('fact_sales', 'sale_date', 'DATE', 'Ngày phát sinh giao dịch', 'Sale date', '', '2024-12-15'),
+('fact_sales', 'branch_id', 'SMALLINT', 'Chi nhánh phụ trách', 'Branch FK', '', '1=CN HN'),
+('fact_sales', 'product_id', 'SMALLINT', 'SKU', 'Product FK', '', '22=HHDN 40v'),
+('fact_sales', 'channel_id', 'TINYINT', 'Kênh', 'Channel FK', '', '1=OTC TT, 3=ETC'),
+('fact_sales', 'quantity', 'INT', 'Số hộp/ống bán', 'Quantity', 'hộp', '50'),
+('fact_sales', 'gross_amount_vnd', 'BIGINT', 'Doanh số gross = qty × giá', 'Gross sales', 'VND', '5000000'),
+('fact_sales', 'discount_amount_vnd', 'BIGINT', 'Chiết khấu áp dụng', 'Discount', 'VND', '300000'),
+('fact_sales', 'net_amount_vnd', 'BIGINT', 'Doanh số net = gross − discount', 'Net sales', 'VND', '4700000'),
+('fact_sales', 'cogs_amount_vnd', 'BIGINT', 'Giá vốn', 'COGS', 'VND', '2200000'),
+('fact_sales', 'gross_profit_vnd', 'BIGINT', 'Lợi nhuận gộp = net − cogs', 'Gross profit', 'VND', '2500000'),
+('dim_product', 'strategic_tier', 'VARCHAR', 'Phân khúc chiến lược', 'Strategic tier', '', 'Premium / Tân dược CL cao / ...'),
+('dim_product', 'raw_material_primary', 'VARCHAR', 'Nguyên liệu chính', 'Primary raw material', '', 'Đinh lăng / API Ursodeoxycholic'),
+('dim_product', 'raw_material_dependency_pct', 'DECIMAL', '% giá vốn từ NL chính', 'Material dependency', '%', '85'),
+('fact_tender', 'status', 'VARCHAR', 'Trạng thái hồ sơ', 'Tender status', '', 'submitting/pending/won/lost'),
+('fact_tender', 'bid_value_vnd', 'BIGINT', 'Giá trị trúng thầu', 'Bid value', 'VND', '2500000000'),
+('fact_tender_delivery', 'delivered_amount_vnd', 'BIGINT', 'Giá trị đã giao', 'Delivered amount', 'VND', '1800000000'),
+('fact_inventory_snapshot', 'quantity_on_hand', 'INT', 'Tồn cuối kỳ', 'On-hand quantity', 'hộp', '500'),
+('fact_inventory_snapshot', 'days_on_hand', 'DECIMAL', 'Day-on-hand = qty / avg_daily_sales_30d', 'Days of supply', 'ngày', '45.2'),
+('fact_raw_material_price', 'avg_price_vnd_per_kg', 'BIGINT', 'Giá trung bình/kg', 'Avg price per kg', 'VND/kg', '220000');
+
+INSERT INTO `_meta_kpi` (`kpi_name`, `formula_sql`, `description_vi`, `related_questions`) VALUES
+('Revenue (Net)', 'SELECT SUM(net_amount_vnd) FROM fact_sales WHERE sale_date BETWEEN ? AND ?', 'Doanh thu thuần (sau chiết khấu)', 'Tổng quan tình hình kinh doanh? DT theo CN/SP/kênh?'),
+('Gross Margin %', 'SELECT 100*SUM(net_amount_vnd-cogs_amount_vnd)/SUM(net_amount_vnd) FROM fact_sales WHERE ...', 'Biên lợi nhuận gộp = (Net − COGS) / Net', 'Vì sao biên Q1 đáy? Q4 hồi phục bao nhiêu?'),
+('Day-on-hand', 'SELECT quantity_on_hand / NULLIF(avg_daily_sales_30d,0) FROM fact_inventory_snapshot WHERE ...', 'Số ngày tồn kho có thể đáp ứng (qty / avg daily sales 30d)', 'Premium còn đủ hàng cho Tết không? Bexita tồn ở đâu?'),
+('Tender Win Rate', 'SELECT 100*SUM(status=won)/COUNT(*) FROM fact_tender WHERE submit_date BETWEEN ?', 'Tỷ lệ trúng thầu', 'Win rate đấu thầu BV?'),
+('Tender Delivery Rate', 'SELECT 100*SUM(d.delivered_amount_vnd)/SUM(t.bid_value_vnd) FROM fact_tender t LEFT JOIN fact_tender_delivery d', 'Tỷ lệ giao thực tế / giá trị trúng thầu', 'BV nào giao chậm? Bexita giao bao nhiêu %?'),
+('YoY Growth', 'SELECT (rev_y2 - rev_y1)/rev_y1 * 100 FROM ...', 'Tăng trưởng cùng kỳ', 'Chuỗi vs nhà thuốc tăng trưởng thế nào?'),
+('Plan Achievement %', 'SELECT 100*actual_value/plan_value FROM fact_plan_actual WHERE ...', '% đạt kế hoạch', 'Đã đạt KH 2024 chưa? CN nào dưới KH?'),
+('Raw Material Cost Index', 'SELECT avg_price_vnd_per_kg FROM fact_raw_material_price WHERE month = ? AND raw_material_id = ?', 'Chỉ số giá nguyên liệu', 'Đinh lăng tăng bao nhiêu? Dự báo Q1/2025?');
+
+INSERT INTO `_meta_glossary` (`term_vi`, `term_en`, `definition`) VALUES
+('OTC', 'Over-the-counter', 'Thuốc không kê đơn, bán qua nhà thuốc'),
+('ETC', 'Ethical / Prescription', 'Thuốc kê đơn, chủ yếu bán qua bệnh viện qua đấu thầu'),
+('TDV', 'Medical Representative', 'Trình dược viên — đại diện công ty làm việc với BS/nhà thuốc'),
+('Day-on-hand', 'Days of supply', 'Số ngày tồn kho có thể bán được dựa trên doanh số bình quân 30 ngày gần nhất'),
+('Bexita', 'Bexita 50mg/100mg', 'Thuốc tiểu đường (Vildagliptin + Metformin) — chuyển giao từ Daewoong'),
+('Ursodeoxycholic', 'Ursodeoxycholic 300mg', 'Thuốc gan mật, sỏi mật — Daewoong'),
+('TimaRo', 'TimaRo 10mg', 'Thuốc tim mạch, mỡ máu (Rosuvastatin) — Daewoong'),
+('Premium', 'Premium tier', 'Dòng cao cấp — Boganic Premium, Cebraton Premium, Formenton Premium, ...'),
+('Boganic', 'Boganic', 'Thương hiệu gan mật #1 đông dược của Traphaco'),
+('HHDN', 'Hoạt huyết dưỡng não', 'Sản phẩm thần kinh #1 đông dược của Traphaco'),
+('Tottri', 'Tottri', 'Sản phẩm trĩ — viên + kem'),
+('Đinh lăng', 'Polyscias fruticosa', 'Dược liệu nội chính cho HHDN, Boganic'),
+('Tam thất', 'Panax notoginseng', 'Dược liệu nội cho Cebraton'),
+('Ba kích', 'Morinda officinalis', 'Dược liệu nội cho Formenton'),
+('Đông dược cao cấp', 'Premium herbal', 'Chiến lược định vị nâng tầm dòng đông dược truyền thống'),
+('Tân dược chất lượng cao', 'High-quality western drug', 'Hợp tác chuyển giao công nghệ từ Daewoong (Hàn Quốc)'),
+('Long Châu', 'FPT Long Châu', 'Chuỗi nhà thuốc lớn nhất VN, ~1.700 cửa hàng, 20% thị phần'),
+('Pharmacity', 'Pharmacity', 'Chuỗi nhà thuốc lớn thứ 2, ~900 cửa hàng'),
+('An Khang', 'An Khang Pharmacy', 'Chuỗi nhà thuốc thuộc MWG, ~300 cửa hàng'),
+('Trung Sơn', 'Trung Sơn Pharma', 'Chuỗi miền Tây — Dongwha (Hàn) đã mua phần lớn cổ phần'),
+('SCIC', 'State Capital Investment Corp', 'Cổ đông Nhà nước'),
+('Mirae Asset', 'Mirae Asset Capital', 'Cổ đông Hàn Quốc — đang giữ ghế Chủ tịch HĐQT'),
+('GMP-WHO', 'Good Manufacturing Practice', 'Tiêu chuẩn sản xuất thuốc của WHO'),
+('EU-GMP', 'European GMP', 'Tiêu chuẩn cao hơn — chỉ 19 nhà máy VN đạt'),
+('Tết', 'Lunar New Year', 'Mùa cao điểm tiêu thụ thuốc bổ + biếu Tết'),
+('Daewoong', 'Daewoong Pharmaceutical', 'Đối tác Hàn — chuyển giao công nghệ Ursodeoxycholic, TimaRo, RebaTot, Bexita'),
+('GPP', 'Good Pharmacy Practice', 'Tiêu chuẩn nhà thuốc'),
+('DMS', 'Distribution Management System', 'Hệ thống quản lý phân phối Traphaco từ 2014'),
+('Strategic Tier', 'Strategic Tier', 'Premium / Tân dược CL cao / Đông dược thường / Tân dược thường / TPCN'),
+('Win Rate', 'Tender win rate', 'Tỷ lệ trúng thầu = won / (won + lost)');
+
