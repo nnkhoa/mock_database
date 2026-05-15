@@ -1,16 +1,16 @@
 # taseco_land_demo — Mock Database
 
-Mock data cho demo BI mảng kinh doanh **Taseco Land** (CTCP Đầu tư Bất động sản Taseco, mã CK **TAL**) — doanh thu kế hoạch 6.000 tỷ năm 2026, 8 dự án core, ~3.000 căn, 33 tháng giao dịch (T1/2024 → T9/2026).
+Mock data cho demo BI mảng kinh doanh **Taseco Land** (CTCP Đầu tư Bất động sản Taseco, mã CK **TAL**) — doanh thu kế hoạch 6.000 tỷ năm 2026, 8 dự án core, ~3.000 căn, **28 tháng giao dịch (01/2024 → 04/2026)**. "Hiện tại" cho demo = **30/04/2026**.
 
 ## Cấu trúc
 
 | File | Mục đích | Kích thước |
 |---|---|---|
-| `01_ddl_schema.sql` | CREATE DATABASE + 23 tables (9 dim + 10 fact + 4 meta) + indexes/FK | ~20 KB |
+| `01_ddl_schema.sql` | CREATE DATABASE + 23 tables (9 dim + 10 fact + 4 meta) + indexes/FK | ~25 KB |
 | `02_metadata.sql` | INSERT INTO _meta_tables / _meta_columns / _meta_kpi / _meta_glossary | ~22 KB |
-| `03_master_data.sql` | 9 dim tables (~4.080 rows) | ~375 KB |
-| `04_transaction_data.sql` | 10 fact tables (~50K rows total, ~28K events) | ~2.4 MB |
-| `05_validation_queries.sql` | SELECT queries verify data + dry-run 5 scenarios | ~7 KB |
+| `03_master_data.sql` | 9 dim tables (~3.910 rows) | ~364 KB |
+| `04_transaction_data.sql` | 10 fact tables (~38K rows + ~20K events) | ~1.8 MB |
+| `05_validation_queries.sql` | SELECT queries verify data + dry-run 5 scenarios | ~10 KB |
 
 ## Setup từ đầu trên một Docker container mới
 
@@ -67,8 +67,8 @@ Lead → Site Visit / Booking giữ chỗ (50-100tr) → Đặt cọc 10-15% →
 **Seasonality BĐS Hà Nội (cài trong dim_calendar):**
 - Q1 thấp điểm (Tết)
 - Q2 cao điểm xuân-hè
-- T8 dương lịch (tháng 7 ÂL — **cô hồn**) giảm máu 30-40%
 - Q4 cao điểm chốt số cuối năm
+- T8 dương lịch (tháng 7 ÂL — **cô hồn**) giảm 30-40% (vào năm 2024 và 2025)
 
 ## 8 dự án core
 
@@ -85,73 +85,73 @@ Lead → Site Visit / Booking giữ chỗ (50-100tr) → Đặt cọc 10-15% →
 
 ## 5 Demo Scenarios (đã cài anomaly)
 
-### Scenario 1 — Bức tranh tổng 9T2026
-*"Doanh số 9T2026 thế nào? Có đạt kế hoạch không?"*
+### Scenario 1 — Bức tranh tổng 4T2026
+*"Doanh số 4 tháng đầu năm 2026 thế nào? Có đạt kế hoạch không?"*
 
 AI phát hiện:
-- Tổng 3.862 tỷ / 6.000 tỷ = 64% kế hoạch năm 2026
-- 🟢 Đầu tàu: Trung Văn (1.177 tỷ — vượt pro-rata), Đoàn Ngoại giao (543 tỷ)
-- 🟡 Theo dõi: Long Biên Central (849 tỷ — chỉ 53% KH dự án)
-- 🔴 Báo động: NOXH Mê Linh (31% KH)
+- Tổng 1.498 tỷ / 6.000 tỷ = 25% kế hoạch năm 2026 (pro-rata 4 tháng ≈ 33% → on pace nhưng lệch theo dự án)
+- 🟢 Đầu tàu: Trung Văn (479 tỷ — 32% KH), Nam An Khánh (37,6% KH — vượt pro-rata)
+- 🟡 Theo dõi: Long Biên Central (388 tỷ — chỉ 24% KH), Thái Nguyên (22,6% KH)
+- 🔴 Báo động: NOXH Mê Linh (17,2% KH — chậm thủ tục)
 
 ### Scenario 2 — Long Biên Central vs Trung Văn
-*"Vì sao Long Biên cháy chậm hơn Trung Văn?"*
+*"Vì sao Long Biên chậm hơn Trung Văn?"*
 
 3 nguyên nhân được AI cross-reference:
-- **Kênh F1:** Đất Vàng Land drop 42% từ T6/2026 (sàn lớn nhất Long Biên)
-- **1PN Long Biên:** Conversion 8.2% (vs 11.8%), lead time 118 ngày (vs 70 ngày của 3PN) → pricing issue
-- **Policy:** Long Biên chỉ HTLS 18 tháng. Trung Văn có thêm chiết khấu 2% từ 11/2025
+- **Kênh F1:** Đất Vàng Land drop 42% từ 02/2026 (sàn lớn nhất Long Biên, share đỉnh 28% → còn ~8%)
+- **1PN Long Biên:** Lead time ~118 ngày (vs 70 ngày của 3PN) → pricing không match phân khúc 1PN
+- **Policy:** Long Biên chỉ HTLS 18 tháng. Trung Văn có thêm chiết khấu 2% từ 11/2025 → conversion jump
 
 ### Scenario 3 — AI tự flag anomaly
 *"Có dấu hiệu bất thường gì gần đây?"*
 
 3 anomalies tự phát hiện:
-- 🚨 **TTV Shophouse cancellation surge** 8/15-9/30/2026: 28 ca hủy (14 từ An Phú Realty — F2 lướt sóng)
-- 🚨 **Đất Vàng Land drop**: Sàn F1 lớn nhất LBC giảm 42% YoY trong 3 tháng gần
-- 🚨 **LBC 1PN lead time**: 118 ngày (vs 70 cho 3PN) — pricing không match phân khúc
+- 🚨 **TTV Shophouse cancellation surge** 15/3-30/4/2026: 28 ca hủy (14 từ An Phú Realty — F2 lướt sóng)
+- 🚨 **Đất Vàng Land drop**: Sàn F1 lớn nhất LBC giảm 42% YoY trong 3 tháng gần (Feb-Mar-Apr 2026)
+- 🚨 **LBC 1PN lead time**: ~118 ngày (vs 70 cho 3PN) — pricing không match phân khúc
 
 ### Scenario 4 — Forecast Long Biên Central
 *"Khi nào Long Biên Central bán hết? Có cần điều chỉnh chính sách?"*
 
 AI dùng elasticity từ TTV policy (11/2025: velocity tăng từ 45 → 60 contracts = +33%) để project Long Biên scenarios A/B/C.
 
-### Scenario 5 — Budget Q4/2026 (Climax)
-*"Nên ưu tiên dự án/kênh/phân khúc nào để max doanh thu Q4?"*
+### Scenario 5 — Budget Q2/2026 (Climax)
+*"Nên ưu tiên dự án/kênh/phân khúc nào để max doanh thu Q2/2026?"*
 
-ROI matrix 9T2026 cho thấy:
-- 🟢 **SCALE UP:** TNS Referral (103x), TTV Referral (43x), TNS B2B/FDI (31x), NMS Referral (21x)
-- 🟢 **Mid:** LBC Online_Paid (12x), TTV Online_Paid (13x)
-- 🔴 **CẮT:** **TTV Internal_Sales (telesales shophouse) ROI 1.03x** ≈ break-even — cắt 70%, chuyển sang Referral
-- 🔴 **CẮT:** Đà Nẵng Resort marketing rộng — còn 6 tháng mới mở bán quy mô
+ROI matrix 4T2026 cho thấy:
+- 🟢 **SCALE UP:** TNS Referral, TTV Referral, TNS B2B/FDI, NMS Referral
+- 🟢 **Mid:** LBC Online_Paid, TTV Online_Paid
+- 🔴 **CẮT:** **TTV Internal_Sales (telesales shophouse) ROI ~1.1x** ≈ break-even — cắt 70%, chuyển sang Referral
+- 🔴 **CẮT:** Đà Nẵng Resort marketing rộng — còn ~11 tháng mới mở bán quy mô
 
 ## Tóm tắt số liệu
 
 | Bảng | Rows |
 |---|---|
-| dim_calendar | 1.004 |
+| dim_calendar | 851 |
 | dim_project | 8 |
 | dim_unit | 2.954 |
 | dim_broker | 28 |
 | dim_employee | 33 |
-| fact_lead | 10.890 |
-| fact_lead_event | 27.564 |
-| fact_booking | 1.739 |
-| fact_deposit | 992 |
-| fact_sales_contract | 992 |
-| fact_cancellation | 732 |
-| fact_payment_installment | 6.640 |
-| fact_marketing_spend | 925 |
-| fact_referral | 20 |
-| fact_unit_inventory_snapshot | 264 |
+| fact_lead | 8.036 |
+| fact_lead_event | 20.182 |
+| fact_booking | 1.285 |
+| fact_deposit | 736 |
+| fact_sales_contract | 736 |
+| fact_cancellation | 555 |
+| fact_payment_installment | 4.962 |
+| fact_marketing_spend | 717 |
+| fact_referral | 8 |
+| fact_unit_inventory_snapshot | 224 |
 | _meta_* (4 tables) | 86 |
 
 ## Magnitude check
 
 | Period | Actual | Spec target | % |
 |---|---|---|---|
-| 2024 | 1.658 tỷ | 1.684 tỷ | **98.5%** |
-| 2025 | 4.014 tỷ | 4.332 tỷ | 92.7% |
-| 9T2026 | 3.862 tỷ | 3.847 tỷ | **100.4%** |
+| 2024 | 1.566 tỷ | 1.684 tỷ | 93% |
+| 2025 | 3.923 tỷ | 4.332 tỷ | 91% |
+| 4T2026 (01-04) | 1.498 tỷ | ~1.500 tỷ (pro-rata 25% KH) | **100%** |
 
 ## Charset / Encoding
 
@@ -163,10 +163,10 @@ mysql -uroot -proot --default-character-set=utf8mb4 taseco_land_demo
 ## Lưu ý cho AI engine MCP
 
 - **Metadata tables `_meta_*`** chứa schema documentation (Tiếng Việt + English), KPI formulas, glossary BĐS VN. AI nên đọc trước khi query.
-- **Data range:** 2024-01-01 → 2026-09-30. "Hiện tại" cho cuộc demo = **30/09/2026**.
+- **Data range:** 2024-01-01 → 2026-04-30. "Hiện tại" cho cuộc demo = **30/04/2026**.
 - **Đơn vị tiền:** VND (BIGINT). Chia 1e9 để có tỷ VND.
-- **Tháng cô hồn** (`dim_calendar.is_thang_co_hon=TRUE`) — kiêng kỵ mua nhà, doanh số dip 30-40% (T8/2026 chỉ có 33 contracts vs T7=54 và T9=70).
-- **Tết** (`is_le_tet=TRUE`) — gần như không có HĐMB.
-- Khi câu hỏi về "AN PHÚ REALTY" + "hủy cọc shophouse" → ám chỉ Scenario 3A (8/15-9/30/2026).
+- **Tháng cô hồn 2024/2025** (`dim_calendar.is_thang_co_hon=TRUE`) — kiêng kỵ mua nhà, doanh số dip 30-40%.
+- **Tết Bính Ngọ 2026** (`is_le_tet=TRUE`, 10-24/2/2026) — gần như không có HĐMB trong window này.
+- Khi câu hỏi về "AN PHÚ REALTY" + "hủy cọc shophouse" → ám chỉ Scenario 3A (15/3-30/4/2026).
 - Khi câu hỏi về "Long Biên Central 1PN" → ám chỉ Scenario 2B (lead time 118 ngày, conversion thấp).
 - Khi câu hỏi về "TTV telesales" hoặc "Internal_Sales TTV shophouse" → ám chỉ Scenario 5 (ROI break-even).
