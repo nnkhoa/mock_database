@@ -18,10 +18,12 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-SQL_DIR="${1}_sql"
-
-if [ ! -d "$SQL_DIR" ]; then
-  echo "ERROR: Folder '$SQL_DIR' not found."
+if [ -d "$1" ]; then
+  SQL_DIR="$1"
+elif [ -d "${1}_sql" ]; then
+  SQL_DIR="${1}_sql"
+else
+  echo "ERROR: Neither folder '$1' nor '${1}_sql' found."
   echo ""
   echo "Available datasets:"
   for dir in *_sql/; do
