@@ -1,0 +1,62 @@
+======================================================================
+VALIDATION REPORT — tondonga_demo
+======================================================================
+
+-- MAGNITUDE --
+  Tổng 18 tháng: 1,155,710 tấn | 27,836 tỷ | ASP bq 24.09 triệu/tấn
+  2024: 780,000 tấn | 18,548 tỷ
+  2025: 375,710 tấn | 9,288 tỷ
+  [PASS] Sản lượng 2024 ~780k (±10%) — 780,000 tấn
+  [PASS] Doanh thu 2024 ~19.000 tỷ (±15%) — 18,548 tỷ
+  [PASS] ASP bình quân 22-27 triệu/tấn — 24.09
+
+-- MARGIN & HRC --
+  Gross margin tổng = 10.9% | HRC share COGS = 69.9%
+  [PASS] Gross margin tổng 9-13% — 10.9%
+  [PASS] HRC share COGS 65-73% — 69.9%
+  GM Q4/2024 = 12.8% -> GM 3 tháng cuối = 9.6% (margin erosion)
+  [PASS] Margin 3 tháng cuối giảm rõ (Anomaly C) — 12.8% -> 9.6%
+
+-- SCENARIO 1: Quý gần nhất (Q2/2025) --
+  Q2/2025: 199,022 tấn | 4,976 tỷ | SL YoY +3.3% | DT YoY +9.5%
+  [PASS] Quý gần nhất ~205k tấn — 199,022
+  [PASS] Quý gần nhất ~5.100 tỷ — 4,976 tỷ
+  [PASS] DT tăng nhanh hơn SL (ASP cải thiện) — DT +9.5% > SL +3.3%
+
+-- YoY Q2 (2025 vs 2024) theo kênh --
+  Nội địa DT YoY = +24.3% (SL +17.6%) | Xuất khẩu DT YoY = -6.4% (SL -11.4%)
+  [PASS] Nội địa tăng mạnh (mục tiêu ~+22%) — +24.3%
+  [PASS] Xuất khẩu giảm (mục tiêu ~-8%) — -6.4%
+  Tỷ trọng DT Nội địa H1: 50.6% (2024) -> 57.3% (2025) | XK chiếm 49.2% SL
+  [PASS] Tỷ trọng nội địa ~50% -> tăng (mục tiêu 56%) — 51%->57%
+
+-- YoY Q2 theo miền (sản lượng) --
+  Miền Bắc: +23.3%
+  Miền Trung: -7.6%
+  [PASS] Miền Trung đi ngược (âm, Anomaly A) — -7.6%
+  Miền Nam: +25.5%
+  [PASS] Miền Nam tăng mạnh — +25.5%
+  XK EU YoY = -21.2% | XK ngoài EU YoY = -0.7%
+  [PASS] XK EU giảm rõ (Anomaly B) — -21.2%
+
+-- Nhóm sản phẩm: YoY (12T) & mix --
+  Tôn màu            YoY(H1)  +30.7% | mix 18.7% -> 22.3%
+  Tôn lạnh           YoY(H1)  +12.5% | mix 33.2% -> 34.1%
+  Tôn kẽm            YoY(H1)   -0.0% | mix 27.5% -> 25.1%
+  CRC                YoY(H1)   +2.4% | mix 11.6% -> 10.9%
+  Thép hộp mạ kẽm    YoY(H1)   -6.7% | mix  8.9% ->  7.6%
+  [PASS] Tôn màu tăng trưởng cao (~+28%) — +30.7%
+  [PASS] Mix tôn màu tăng (cao cấp hoá)
+
+-- PARETO --
+  Top 20% SKU = 63.4% doanh thu
+  [PASS] Pareto top20% SKU ~ 55-90% revenue — 63.4%
+
+-- INTEGRITY --
+  [PASS] FK hợp lệ (customer/product/region)
+  [PASS] fact_sales 1-1 fact_cogs
+  [PASS] revenue>0 & quantity>0
+  [PASS] ASP mỗi dòng trong 15-32 triệu/tấn
+  [PASS] net_revenue ≈ quantity × asp
+  [PASS] Mọi tháng đều có giao dịch — 18/18
+======================================================================
