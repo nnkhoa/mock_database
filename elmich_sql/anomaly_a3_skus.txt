@@ -1,0 +1,17 @@
+18 SKU dùng cho Anomaly A3 (online ăn thịt showroom)
+product_id	sku_code	product_name_vi	product_line	category	popularity_rank
+3	ELM-01-0003	Chảo chống dính Royal 26cm	Royal	Chảo chống dính	13
+219	ELM-09-0219	Bình giữ nhiệt Royal 500ml	Royal	Bình giữ nhiệt	17
+239	ELM-09-0239	Bình giữ nhiệt Royal 500ml	Royal	Bình giữ nhiệt	26
+34	ELM-01-0034	Chảo chống dính Smartcook 24cm	Smartcook	Chảo chống dính	27
+33	ELM-01-0033	Chảo chống dính Smartcook 26cm	Smartcook	Chảo chống dính	29
+80	ELM-02-0080	Nồi đơn Smartcook 22cm	Smartcook	Nồi đơn	31
+100	ELM-03-0100	Bộ nồi Smartcook 6 món	Smartcook	Bộ nồi	32
+99	ELM-03-0099	Bộ nồi Royal 4 món	Royal	Bộ nồi	33
+20	ELM-01-0020	Chảo chống dính Royal 24cm	Royal	Chảo chống dính	35
+153	ELM-05-0153	Nồi chiên không dầu Royal 4.5L	Royal	Nồi chiên không dầu	38
+232	ELM-09-0232	Bình giữ nhiệt Smartcook 750ml	Smartcook	Bình giữ nhiệt	40
+148	ELM-05-0148	Nồi chiên không dầu Royal 6.5L	Royal	Nồi chiên không dầu	46
+36	ELM-01-0036	Chảo chống dính Royal 20cm	Royal	Chảo chống dính	47
+94	ELM-03-0094	Bộ nồi Smartcook 5 món	Smartcook	Bộ nồi	49
+60	ELM-02-0060	Nồi đơn Smartcook 16cm	Smartcook	Nồi đơn	56
