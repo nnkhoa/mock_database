@@ -1,0 +1,159 @@
+==============================================================================
+D.1 KỸ THUẬT
+==============================================================================
+  PASS  Schema khớp database-schema.md: 0  mục tiêu [0 … 0] SCHEMA OK: 15 bảng nghiệp vụ, 118 cột khớp y hệt database-schema.md (tên, thứ tự, kiểu, PK, FK) + 4 bảng metadata
+  PASS  FK mồ côi (13 quan hệ, gồm snapshot_date ∈ dim_dates): 0  mục tiêu [0 … 0] 
+  PASS  Khu vực/vùng denormalized của dim_customers khớp dim_provinces: 0  mục tiêu [0 … 0] 
+  PASS  gross = quantity_kg × list_price (sai lệch >1 đ): 0  mục tiêu [0 … 0] 
+  PASS  net = gross − std − special: 0  mục tiêu [0 … 0] 
+  PASS  list_price khớp fact_list_prices tại ngày HĐ: 0  mục tiêu [0 … 0] 
+  PASS  standard_cost = kg × giá vốn chuẩn tháng (sai lệch >1 đ): 0  mục tiêu [0 … 0] 
+  PASS  Snapshot: outstanding = not_due + 4 bucket: 0  mục tiêu [0 … 0] 
+  PASS  HĐ trước start_date / sau end_date: 0  mục tiêu [0 … 0] 
+  PASS  SKU ngưng kinh doanh bán từ 01/01/2026: 0  mục tiêu [0 … 0] 
+  PASS  due_date = invoice_date + payment_term_days: 0  mục tiêu [0 … 0] 
+  PASS  Giá trị âm/0 (kg, bao, gross, net, giá vốn): 0  mục tiêu [0 … 0] 
+  PASS  quantity_kg = bags × pack_size_kg: 0  mục tiêu [0 … 0] 
+  PASS  Ngày làm việc (≠ CN, ≠ mùng 1–3 Tết) thiếu HĐ ở ≥1 vùng: 0  mục tiêu [0 … 0] 
+  PASS  HĐ ngày mùng 1–3 Tết: 0  mục tiêu [0 … 0] 
+  PASS  Tỷ lệ số HĐ ngày Chủ nhật (%): 4.47  mục tiêu [0.00 … 5.00] 
+  PASS  HĐ có >1 khách hàng/ngày/nhà máy: 0  mục tiêu [0 … 0] 
+  PASS  Số dòng/HĐ min–max (TB 2.08): 6  mục tiêu [1 … 6] min=1
+  PASS  Định dạng invoice_no GFyymm-nnnnnn khớp tháng HĐ: 0  mục tiêu [0 … 0] 
+  PASS  Số dòng fact_sales_lines (nghìn) — thu gọn để file 04 < 50 MB: 349.2  mục tiêu [250.0 … 380.0] 
+  PASS  NVKD trên HĐ cùng khu vực khách hàng: 0  mục tiêu [0 … 0] 
+==============================================================================
+D.2 THỐNG KÊ — mốc C.1
+==============================================================================
+  PASS  Sản lượng 2025 (tấn): 1,300,003  mục tiêu [1,274,000 … 1,326,000] 
+  PASS  Doanh thu thuần 2025 (tỷ): 16,171  mục tiêu [15,900 … 16,300] 
+  PASS  Giá thực bình quân 2025 (đ/kg): 12,439  mục tiêu [12,100 … 12,500] 
+  PASS  Sản lượng Q4/2024 (tấn): 352,992  mục tiêu [345,000 … 360,000] 
+  PASS  Biên lãi gộp 2025 (%): 11.90  mục tiêu [11.50 … 13.00] 
+  PASS  Tỷ trọng vùng 1 2025 (%): 29.00  mục tiêu [27.50 … 30.50] 
+  PASS  Tỷ trọng vùng 2 2025 (%): 16.00  mục tiêu [14.50 … 17.50] 
+  PASS  Tỷ trọng vùng 3 2025 (%): 23.00  mục tiêu [21.50 … 24.50] 
+  PASS  Tỷ trọng vùng 4 2025 (%): 32.00  mục tiêu [30.50 … 33.50] 
+  PASS  Tỷ trọng Heo 2025 (%): 57.17  mục tiêu [55.00 … 59.00] 
+  PASS  Tỷ trọng Gia cầm 2025 (%): 29.88  mục tiêu [28.00 … 32.00] 
+  PASS  Tỷ trọng Thủy sản 2025 (%): 12.95  mục tiêu [11.00 … 15.00] 
+  PASS  Tỷ trọng kênh đại lý 2025 (%): 73.14  mục tiêu [72.00 … 75.00] 
+  PASS  Sản lượng 9T/2026 vs 9T/2025 (%): 6.11  mục tiêu [5.00 … 6.50] 
+  PASS  Pareto: top 20% SKU (17/83) chiếm % sản lượng 2025: 76.96  mục tiêu [72.00 … 82.00] 
+  PASS  Doanh thu thuần tháng bình quân 2025 (tỷ): 1,348  mục tiêu [1,264 … 1,396] 
+  FAIL  Doanh thu 9T tăng thấp hơn sản lượng 1–2 điểm % (chênh lệch, điểm %): +0.57  mục tiêu [-2.00 … -1.00] (DT +6.69%) — lệch đã báo ở Checkpoint 2: lần tăng giá 06/2025 nâng giá 9T/2026
+  -- Sản lượng theo tháng 24 tháng (tấn, tỷ đồng, %)
+    +---------+----------+-------+---------+----------+-------+---------+
+    | thang   | tan_tong | heo   | gia_cam | thuy_san | dt_ty | bien_lg |
+    +---------+----------+-------+---------+----------+-------+---------+
+    | 2024-10 |   112433 | 64059 |   34043 |    14331 |  1376 |     8.4 |
+    | 2024-11 |   120334 | 69204 |   38870 |    12260 |  1460 |     8.8 |
+    | 2024-12 |   120225 | 71111 |   39853 |     9261 |  1448 |     8.8 |
+    | 2025-01 |    84103 | 52458 |   25747 |     5898 |  1017 |     8.8 |
+    | 2025-02 |    76344 | 48278 |   21280 |     6786 |   932 |    10.6 |
+    | 2025-03 |   104335 | 61929 |   30563 |    11843 |  1277 |    11.5 |
+    | 2025-04 |   109332 | 61599 |   31830 |    15903 |  1350 |    10.8 |
+    | 2025-05 |   112606 | 62369 |   32095 |    18142 |  1397 |     7.9 |
+    | 2025-06 |   106735 | 57752 |   30588 |    18395 |  1353 |     7.8 |
+    | 2025-07 |   102488 | 54885 |   29358 |    18245 |  1300 |     9.0 |
+    | 2025-08 |   107138 | 58315 |   30896 |    17927 |  1357 |    12.0 |
+    | 2025-09 |   116534 | 64742 |   34405 |    17387 |  1469 |    13.9 |
+    | 2025-10 |   121898 | 69682 |   37126 |    15090 |  1524 |    15.1 |
+    | 2025-11 |   131231 | 75923 |   42386 |    12922 |  1627 |    15.6 |
+    | 2025-12 |   127258 | 75280 |   42166 |     9812 |  1569 |    16.3 |
+    | 2026-01 |   116692 | 73154 |   35501 |     8037 |  1442 |    16.6 |
+    | 2026-02 |    61220 | 39607 |   17037 |     4577 |   764 |    16.2 |
+    | 2026-03 |   102042 | 60807 |   29296 |    11940 |  1279 |    15.0 |
+    | 2026-04 |   114260 | 65655 |   33283 |    15322 |  1427 |    12.9 |
+    | 2026-05 |   118143 | 66121 |   33796 |    18226 |  1485 |    13.2 |
+    | 2026-06 |   116314 | 64713 |   33140 |    18461 |  1462 |    12.6 |
+    | 2026-07 |   111413 | 61403 |   31925 |    18084 |  1403 |    11.8 |
+    | 2026-08 |   113883 | 63247 |   32686 |    17949 |  1432 |    11.1 |
+    | 2026-09 |   121881 | 68525 |   35957 |    17399 |  1523 |    10.4 |
+    +---------+----------+-------+---------+----------+-------+---------+
+  PASS  Đỉnh 2025 rơi vào tháng 11–12 (số tháng top-2 thuộc 11–12): 2  mục tiêu [2 … 2] ['2025-12', '2025-11']
+  PASS  Đáy 2025 = tháng có Tết (02/2025 hoặc 01/2025): 1  mục tiêu [1 … 1] 2025-02
+  PASS  Đáy 2026 = tháng 02/2026 (Tết): 1  mục tiêu [1 … 1] 
+  PASS  Thủy sản 2025: tháng đỉnh thuộc 5–7: 1  mục tiêu [1 … 1] đỉnh 06, đáy 01
+  PASS  Thủy sản 2025: tháng đáy thuộc 12–2: 1  mục tiêu [1 … 1] 
+==============================================================================
+D.2 THỐNG KÊ — Anomaly A (Miền Tây)
+==============================================================================
+  PASS  Thức ăn heo MT Q3/2026 vs Q3/2025 (%): -10.01  mục tiêu [-12.00 … -8.00] 
+  PASS  Thức ăn heo MT 9T/2026 vs 9T/2025 (%): -2.46  mục tiêu [-5.00 … -1.00] 
+  PASS  Toàn Miền Tây 9T/2026 vs 9T/2025 (%): -0.51  mục tiêu [-3.00 … 1.00] 
+  PASS  Nhóm A giải thích % mức giảm Q3/2026 so với kỳ vọng (Q3/2025 × (1+0.010)): 95.00  mục tiêu [75.00 … +∞] 
+  PASS  Sản lượng heo nhóm A 2025 (tấn/tháng): 3,749  mục tiêu [3,500 … 3,900] 
+  PASS  Nhóm A / heo Miền Tây 2025 (%): 22.53  mục tiêu [20.00 … 25.00] 
+  PASS  Sản lượng thức ăn heo nhóm A tháng 9/2026 / tháng 3/2026 (%): 48.92  mục tiêu [45.00 … 55.00] 
+        tham chiếu: toàn bộ sản lượng nhóm A (gồm gia cầm, thủy sản) T9/T3 = 72.3%
+  PASS  Heo thịt + đậm đặc GreenFeed / sản lượng heo nhóm A (%): 79.94  mục tiêu [70.00 … +∞] 
+  PASS  Khách heo MT khác (hiện hữu) Q3/2026 vs Q3/2025 (%): -1.73  mục tiêu [-6.00 … 0.00] 
+  PASS  Số HĐ nhóm A tháng 9 / tháng 3/2026 (%) — đơn thưa dần: 72.37  mục tiêu [−∞ … 85.00] 
+  PASS  Giá heo hơi MT 03/2026 (đ/kg): 68,980  mục tiêu [68,500 … 70,500] 
+  PASS  Giá heo hơi MT 09/2026 (đ/kg): 58,825  mục tiêu [58,000 … 60,000] 
+  PASS  Nợ quá hạn >30 ngày nhóm A 31/03/2026 (tỷ): 2.1  mục tiêu [2.0 … 5.0] 
+  PASS  Nợ quá hạn >30 ngày nhóm A 30/09/2026 (tỷ): 63.7  mục tiêu [55.0 … 75.0] 
+  PASS  Số đại lý nhóm A vượt hạn mức 2026-08-31: 6  mục tiêu [6 … 6] 
+  PASS  Tổng số KH vượt hạn mức toàn công ty 2026-08-31: 6  mục tiêu [6 … 6] 
+  PASS  Số đại lý nhóm A vượt hạn mức 2026-09-30: 6  mục tiêu [6 … 6] 
+  PASS  Tổng số KH vượt hạn mức toàn công ty 2026-09-30: 6  mục tiêu [6 … 6] 
+  PASS  Số KH vượt hạn mức trước 08/2026 (mọi snapshot): 0  mục tiêu [0 … 0] 
+  PASS  DSO nhóm A 31/03/2026 (ngày): 35.2  mục tiêu [28.0 … 42.0] 
+  PASS  DSO nhóm A 30/09/2026 (ngày): 109.6  mục tiêu [75.0 … +∞] 
+  PASS  Nền: nợ quá hạn >30 ngày / dư nợ (bình quân snapshot 2025, %): 3.23  mục tiêu [3.00 … 5.00] 
+  PASS  Nền: DSO đại lý 31/12/2025 (ngày): 32.9  mục tiêu [32.0 … 38.0] (tháng cao điểm Q4)
+  PASS  Nền: DSO trang trại 31/12/2025 (ngày): 46.9  mục tiêu [42.0 … 48.0] 
+==============================================================================
+D.2 THỐNG KÊ — Anomaly B (Miền Bắc)
+==============================================================================
+  PASS  CK đặc biệt / gross MB 2025 (%): 2.07  mục tiêu [2.00 … 2.30] 
+  PASS  CK đặc biệt / gross MB Q2–Q3/2026 (%): 5.61  mục tiêu [5.50 … 6.00] 
+  PASS  Sản lượng MB 9T/2026 vs 9T/2025 (%): 11.00  mục tiêu [10.00 … 12.00] 
+  FAIL  Doanh thu thuần MB 9T/2026 vs 9T/2025 (%): 9.45  mục tiêu [5.50 … 7.50] — lệch đã báo ở Checkpoint 2 (lần tăng giá 06/2025)
+  PASS  Lãi gộp MB Q2–Q3/2026 vs Q2–Q3/2025 (%): 0.49  mục tiêu [0.00 … 2.00] 
+        tham chiếu: lãi gộp vùng 2 Q2–Q3/2026 vs 2025: +53.9%
+        tham chiếu: lãi gộp vùng 3 Q2–Q3/2026 vs 2025: +30.2%
+        tham chiếu: lãi gộp vùng 4 Q2–Q3/2026 vs 2025: +24.3%
+  PASS  Nhóm B nhận % tổng CK đặc biệt MB Q2–Q3/2026: 47.47  mục tiêu [45.00 … +∞] 
+  PASS  Giá thực heo thịt GF MB: Q4/2025 − Q3/2026 (đ/kg): 471  mục tiêu [450 … 550] 
+  PASS  Đại lý khác cùng 4 tỉnh (hiện hữu) Q2–Q3/2026 vs 2025 (%) — giảm nhập nhẹ: -1.61  mục tiêu [−∞ … 0.00] 
+==============================================================================
+D.2 THỐNG KÊ — Anomaly C (MTTN)
+==============================================================================
+  PASS  Sản lượng MTTN 9T/2026 vs 9T/2025 (%): 18.02  mục tiêu [15.00 … 19.00] 
+  PASS  Sản lượng MTTN Q3/2026 vs Q3/2025 (%): 23.01  mục tiêu [22.00 … 28.00] 
+  PASS  Tỷ trọng G.TEK trong heo MTTN 6T/2025 (%): 9.52  mục tiêu [7.50 … 10.50] 
+  PASS  Tỷ trọng G.TEK trong heo MTTN Q3/2026 (%): 19.24  mục tiêu [17.00 … 21.00] 
+  PASS  Tỷ lệ sản lượng MTTN xuất từ DNA 6T/2025 (%): 8.89  mục tiêu [6.00 … 10.00] 
+  PASS  Tỷ lệ sản lượng MTTN xuất từ DNA Q3/2026 (%): 22.78  mục tiêu [20.00 … 24.00] 
+  PASS  Vận chuyển bình quân MTTN 6T/2025 (đ/kg): 245  mục tiêu [215 … 255] 
+  PASS  Vận chuyển bình quân MTTN Q3/2026 (đ/kg): 287  mục tiêu [260 … 300] 
+  PASS  Số trang trại nhóm C (start 04/2025–08/2026, MTTN): 62  mục tiêu [62 … 62] 
+  PASS  Sản lượng nhóm C tháng 9/2026 (tấn): 3,851  mục tiêu [3,500 … 4,000] 
+  PASS  G.TEK trong heo của nhóm C Q3/2026 (%): 40.39  mục tiêu [35.00 … 45.00] 
+  PASS  Kênh trang trại / MTTN Q3/2026 (%): 36.21  mục tiêu [34.00 … 42.00] 
+  PASS  Nợ quá hạn >30 ngày nhóm C 30/09/2026 / dư nợ (%): 3.07  mục tiêu [−∞ … 6.00] 
+==============================================================================
+D.2 THỐNG KÊ — Scenario 5 (độ nhạy giá) & 6 (kế hoạch)
+==============================================================================
+  PASS  Số SKU heo + gia cầm tăng giá đúng +300 đ/kg ngày 01/06/2025: 58  mục tiêu [58 … 58] 
+  PASS  Tỷ lệ trang trại/đại lý T6–7/2025 so với T4–5 & T9–10 (%) ≈ 0,92/0,97 − 1: -5.57  mục tiêu [-7.50 … -3.00] 
+  PASS  Giá vốn chuẩn heo thịt GF 09/2026 vs 06/2026 (%): 2.37  mục tiêu [2.00 … 2.50] 
+  PASS  Không có điều chỉnh giá niêm yết sau 01/04/2026: 0  mục tiêu [0 … 0] 
+  PASS  Kế hoạch sản lượng 2026 (tấn): 1,413,493  mục tiêu [1,410,000 … 1,420,000] 
+  PASS  Thực hiện 9T/2026 / kế hoạch 9T (%): 97.60  mục tiêu [96.00 … 98.00] 
+  PASS  Thực hiện 2025 / kế hoạch 2025 (%): 100.75  mục tiêu [100.50 … 101.00] 
+  PASS  Q4/2026 thiếu so với mức cần (cần 437,646 − dự kiến Q4/2025×(1+0.0611) = 403,646): 33,999  mục tiêu [30,000 … 45,000] 
+  PASS  Kế hoạch có đủ 792 dòng (24 tháng × 11 khu vực × 3 nhóm): 792  mục tiêu [792 … 792] 
+==============================================================================
+D.4 FALLBACK
+==============================================================================
+  PASS  F2: KH lớn nhất DNB 2025 / sản lượng vùng (%): 2.79  mục tiêu [−∞ … 8.00] Công ty TNHH Chăn nuôi Xuân Mai
+  PASS  F3: nhà máy lớn nhất 2025 là BLU (BLU): 1  mục tiêu [1 … 1] 
+  PASS  F3: số nhà máy vượt công suất thiết kế: 0  mục tiêu [0 … 0] BLU 308,887 | VLG 242,263 | HYN 229,805 | DNA 209,129 | GLA 162,726 | HNM 147,194
+  PASS  Tháng trống (vùng × nhóm × tháng không có sản lượng): 0  mục tiêu [0 … 0] 
+==============================================================================
+TỔNG: 99/101 PASS
+  FAIL [C.1] Doanh thu 9T tăng thấp hơn sản lượng 1–2 điểm % (chênh lệch, điểm %)
+  FAIL [B] Doanh thu thuần MB 9T/2026 vs 9T/2025 (%)
