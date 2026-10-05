@@ -1,62 +1,124 @@
-======================================================================
+==============================================================================
 VALIDATION REPORT — tondonga_demo
-======================================================================
+==============================================================================
+fact_sales: 159,473 dòng | khách hàng: 251 | sản phẩm: 72
 
--- MAGNITUDE --
-  Tổng 18 tháng: 1,155,710 tấn | 27,836 tỷ | ASP bq 24.09 triệu/tấn
-  2024: 780,000 tấn | 18,548 tỷ
-  2025: 375,710 tấn | 9,288 tỷ
-  [PASS] Sản lượng 2024 ~780k (±10%) — 780,000 tấn
-  [PASS] Doanh thu 2024 ~19.000 tỷ (±15%) — 18,548 tỷ
-  [PASS] ASP bình quân 22-27 triệu/tấn — 24.09
+-- QUY MÔ THEO NĂM (ngoài nhóm) --
+  2024: 19,100 tỷ | 849,407 tấn | ASP 22.49 tr/tấn | biên gộp 8.54%
+  2025: 15,000 tỷ | 746,207 tấn | ASP 20.10 tr/tấn | biên gộp 7.46%
+  2026: 10,100 tỷ | 519,922 tấn | ASP 19.43 tr/tấn | biên gộp 6.56%
+  [PASS] Doanh thu 2024 (tỷ): 19,100  (khoảng chấp nhận 18,900 – 19,300)
+  [PASS] Doanh thu 6T/2025 (tỷ) — công bố 8.233: 8,233  (khoảng chấp nhận 8,150 – 8,320)
+  [PASS] Doanh thu 6T/2026 (tỷ) — công bố 6.655: 6,655  (khoảng chấp nhận 6,590 – 6,720)
+  [PASS] Biên gộp 6T/2026 (%) — công bố 6,5: 6.54  (khoảng chấp nhận 6.30 – 6.70)
+  [PASS] Doanh thu 9T/2025 (tỷ) — công bố 11.900: 11,900  (khoảng chấp nhận 11,800 – 12,000)
+  [PASS] Sản lượng 9T/2025 (tấn) — công bố 588.000: 588,434  (khoảng chấp nhận 575,000 – 600,000)
+  [PASS] Doanh thu 9T/2026 (tỷ): 10,100  (khoảng chấp nhận 10,000 – 10,200)
 
--- MARGIN & HRC --
-  Gross margin tổng = 10.9% | HRC share COGS = 69.9%
-  [PASS] Gross margin tổng 9-13% — 10.9%
-  [PASS] HRC share COGS 65-73% — 69.9%
-  GM Q4/2024 = 12.8% -> GM 3 tháng cuối = 9.6% (margin erosion)
-  [PASS] Margin 3 tháng cuối giảm rõ (Anomaly C) — 12.8% -> 9.6%
+-- UAT 1, 9, 18: ba kỳ --
+  09/2025: 1,250.0 tỷ | 63,097 tấn | ASP 19.81 | biên gộp 7.41%
+  08/2026: 1,117.0 tỷ | 57,748 tấn | ASP 19.34 | biên gộp 6.47%
+  09/2026: 1,150.0 tỷ | 58,884 tấn | ASP 19.53 | biên gộp 6.76%
+  [PASS] T9/2026 so T8/2026 (%): 3.0  (khoảng chấp nhận 2.0 – 4.0)
+  [PASS] T9/2026 so T9/2025 (%): -8.0  (khoảng chấp nhận -9.0 – -7.0)
 
--- SCENARIO 1: Quý gần nhất (Q2/2025) --
-  Q2/2025: 199,022 tấn | 4,976 tỷ | SL YoY +3.3% | DT YoY +9.5%
-  [PASS] Quý gần nhất ~205k tấn — 199,022
-  [PASS] Quý gần nhất ~5.100 tỷ — 4,976 tỷ
-  [PASS] DT tăng nhanh hơn SL (ASP cải thiện) — DT +9.5% > SL +3.3%
+-- UAT 3, 8, 10, 13, 16: dòng sản phẩm (9T/2026 so 9T/2025) --
+  Tôn lạnh                                       DT    3,834 |    4,704 ( -18.5%) tỷ trọng  38.0% | ASP 19.40 | 20.20 | biên gộp  6.55 |  7.01 | SL   197,633 |   232,821
+  Tôn lạnh màu                                   DT    2,824 |    2,799 (  +0.9%) tỷ trọng  28.0% | ASP 23.38 | 24.09 | biên gộp  9.55 | 10.01 | SL   120,758 |   116,172
+  Tôn kẽm                                        DT    1,722 |    2,970 ( -42.0%) tỷ trọng  17.1% | ASP 17.71 | 18.92 | biên gộp  4.91 |  8.01 | SL    97,241 |   157,020
+  Thép cán nguội                                 DT      913 |    1,012 (  -9.8%) tỷ trọng   9.0% | ASP 16.82 | 17.52 | biên gộp  3.52 |  4.01 | SL    54,305 |    57,757
+  Ống hộp mạ kẽm                                 DT      806 |      415 ( +94.3%) tỷ trọng   8.0% | ASP 16.13 | 16.82 | biên gộp  3.14 |  3.31 | SL    49,984 |    24,665
+  [PASS] Tôn lạnh có doanh thu lớn nhất, tỷ trọng (%): 38.0  (khoảng chấp nhận 36.5 – 39.5)
+  [PASS] Tôn lạnh màu: tỷ trọng tăng (điểm %): 4.4  (khoảng chấp nhận 3.5 – 5.5)
+  [PASS] Tôn kẽm: đóng góp âm lớn nhất (tỷ): -1,248  (khoảng chấp nhận -1,350 – -1,150)
+  [PASS] Ống hộp: sản lượng tăng (%): 102.7  (khoảng chấp nhận 80.0 – 120.0)
+  [PASS] ASP Tôn lạnh màu cao nhất (tr/tấn): 23.38  (khoảng chấp nhận 23.10 – 23.90)
+  [PASS] ASP Ống hộp thấp nhất (tr/tấn): 16.13  (khoảng chấp nhận 15.90 – 16.60)
+  [PASS] Biên gộp Tôn lạnh màu (%): 9.55  (khoảng chấp nhận 9.20 – 9.90)
+  [PASS] Biên gộp Ống hộp (%): 3.14  (khoảng chấp nhận 2.60 – 3.50)
+  [PASS] Biên gộp Tôn kẽm giảm (điểm %): -3.10  (khoảng chấp nhận -3.40 – -2.60)
 
--- YoY Q2 (2025 vs 2024) theo kênh --
-  Nội địa DT YoY = +24.3% (SL +17.6%) | Xuất khẩu DT YoY = -6.4% (SL -11.4%)
-  [PASS] Nội địa tăng mạnh (mục tiêu ~+22%) — +24.3%
-  [PASS] Xuất khẩu giảm (mục tiêu ~-8%) — -6.4%
-  Tỷ trọng DT Nội địa H1: 50.6% (2024) -> 57.3% (2025) | XK chiếm 49.2% SL
-  [PASS] Tỷ trọng nội địa ~50% -> tăng (mục tiêu 56%) — 51%->57%
+-- UAT 4, 11, 14: thị trường (9T/2026 so 9T/2025) --
+  Nội địa - Miền Nam                             DT    4,630 |    4,484 (  +3.3%) tỷ trọng  45.8% | ASP 19.49 | 20.10 | biên gộp  7.10 |  7.92 | SL   237,541 |   223,072
+  Nội địa - Miền Bắc                             DT    2,567 |    2,384 (  +7.7%) tỷ trọng  25.4% | ASP 19.40 | 19.90 | biên gộp  6.65 |  7.23 | SL   132,312 |   119,765
+  Nội địa - Miền Trung                           DT    1,354 |    1,437 (  -5.8%) tỷ trọng  13.4% | ASP 19.09 | 19.79 | biên gộp  5.92 |  6.57 | SL    70,913 |    72,613
+  Xuất khẩu - Đông Nam Á                         DT      640 |    1,306 ( -51.0%) tỷ trọng   6.3% | ASP 17.80 | 19.61 | biên gộp  2.54 |  7.72 | SL    35,939 |    66,605
+  Xuất khẩu - Châu Âu                            DT      332 |    1,241 ( -73.3%) tỷ trọng   3.3% | ASP 21.39 | 21.80 | biên gộp  7.33 |  7.79 | SL    15,522 |    56,926
+  Xuất khẩu - Châu Đại Dương                     DT      249 |      419 ( -40.6%) tỷ trọng   2.5% | ASP 21.22 | 21.58 | biên gộp  8.01 |  8.55 | SL    11,727 |    19,413
+  Xuất khẩu - Bắc Mỹ                             DT      120 |      178 ( -32.7%) tỷ trọng   1.2% | ASP 22.00 | 22.50 | biên gộp  7.65 |  8.01 | SL     5,449 |     7,919
+  Xuất khẩu - Đông Bắc Á                         DT      115 |      248 ( -53.7%) tỷ trọng   1.1% | ASP 19.88 | 20.40 | biên gộp  6.38 |  7.20 | SL     5,785 |    12,166
+  Xuất khẩu - Trung Đông                         DT       94 |      203 ( -53.7%) tỷ trọng   0.9% | ASP 19.88 | 20.40 | biên gộp  6.38 |  7.26 | SL     4,733 |     9,954
+  [PASS] Miền Trung giảm (%): -5.8  (khoảng chấp nhận -8.5 – -4.0)
+  [PASS] Miền Bắc tăng (%): 7.7  (khoảng chấp nhận 5.0 – 10.0)
+  [PASS] Châu Âu: đóng góp âm lớn nhất (tỷ): -909  (khoảng chấp nhận -980 – -860)
+  [PASS] ASP Đông Nam Á giảm (%): -9.2  (khoảng chấp nhận -10.5 – -8.0)
 
--- YoY Q2 theo miền (sản lượng) --
-  Miền Bắc: +23.3%
-  Miền Trung: -7.6%
-  [PASS] Miền Trung đi ngược (âm, Anomaly A) — -7.6%
-  Miền Nam: +25.5%
-  [PASS] Miền Nam tăng mạnh — +25.5%
-  XK EU YoY = -21.2% | XK ngoài EU YoY = -0.7%
-  [PASS] XK EU giảm rõ (Anomaly B) — -21.2%
+-- UAT 5, 12, 15: kênh (9T/2026 so 9T/2025) --
+  Đại lý cấp 1                                   DT    4,697 |    4,762 (  -1.4%) tỷ trọng  46.5% | ASP 19.73 | 20.29 | biên gộp  6.93 |  7.64 | SL   238,057 |   234,698
+  Nhà phân phối                                  DT    1,755 |    1,787 (  -1.8%) tỷ trọng  17.4% | ASP 19.34 | 19.89 | biên gộp  6.95 |  7.64 | SL    90,765 |    89,867
+  Xuất khẩu                                      DT    1,550 |    3,595 ( -56.9%) tỷ trọng  15.3% | ASP 19.58 | 20.78 | biên gộp  5.36 |  7.79 | SL    79,156 |   172,984
+  Dự án – Công trình                             DT    1,164 |      893 ( +30.3%) tỷ trọng  11.5% | ASP 18.53 | 19.08 | biên gộp  7.31 |  7.85 | SL    62,837 |    46,815
+  Khách hàng công nghiệp                         DT      935 |      863 (  +8.3%) tỷ trọng   9.3% | ASP 19.03 | 19.58 | biên gộp  5.02 |  5.93 | SL    49,107 |    44,070
+  [PASS] Đại lý cấp 1: tỷ trọng (%): 46.5  (khoảng chấp nhận 45.0 – 48.0)
+  [PASS] Dự án – Công trình tăng nhanh nhất (%): 30.3  (khoảng chấp nhận 26.0 – 35.0)
+  [PASS] ASP kênh Dự án thấp hơn bình quân chung (tr/tấn): -0.90  (khoảng chấp nhận -1.60 – -0.60)
+  [PASS] 10 đại lý cấp 1 lớn nhất / doanh thu kênh (%): 43.7  (khoảng chấp nhận 30.0 – 45.0)
 
--- Nhóm sản phẩm: YoY (12T) & mix --
-  Tôn màu            YoY(H1)  +30.7% | mix 18.7% -> 22.3%
-  Tôn lạnh           YoY(H1)  +12.5% | mix 33.2% -> 34.1%
-  Tôn kẽm            YoY(H1)   -0.0% | mix 27.5% -> 25.1%
-  CRC                YoY(H1)   +2.4% | mix 11.6% -> 10.9%
-  Thép hộp mạ kẽm    YoY(H1)   -6.7% | mix  8.9% ->  7.6%
-  [PASS] Tôn màu tăng trưởng cao (~+28%) — +30.7%
-  [PASS] Mix tôn màu tăng (cao cấp hoá)
+-- UAT 6: công ty | nhà máy (9T/2026 so 9T/2025) --
+  Cổ phần Tôn Đông Á | Nhà máy Thủ Dầu Một       DT    4,689 |    6,821 ( -31.3%) tỷ trọng  46.4% | ASP 19.38 | 20.27 | biên gộp  6.61 |  7.81 | SL   241,897 |   336,558
+  Cổ phần Tôn Đông Á | Nhà máy Sóng Thần         DT    2,241 |    2,559 ( -12.4%) tỷ trọng  22.2% | ASP 20.17 | 20.47 | biên gộp  8.05 |  8.48 | SL   111,107 |   125,054
+  TNHH MTV Tôn Đông Á Bắc Ninh | Chi nhánh Bắc N DT    1,430 |    1,183 ( +20.9%) tỷ trọng  14.2% | ASP 19.60 | 20.09 | biên gộp  5.99 |  6.42 | SL    72,922 |    58,875
+  TNHH MTV Tôn Đông Á Long An | Chi nhánh Long A DT      785 |      638 ( +23.1%) tỷ trọng   7.8% | ASP 20.31 | 20.55 | biên gộp  6.16 |  6.58 | SL    38,648 |    31,035
+  TNHH MTV Tôn Đông Á Đà Nẵng | Nhà máy Ống thép DT      553 |      609 (  -9.2%) tỷ trọng   5.5% | ASP 18.00 | 18.97 | biên gộp  3.87 |  4.90 | SL    30,699 |    32,080
+  Cổ phần Tôn Đông Á | Nhà máy Ống hộp số 5      DT      334 |        0 (  +nan%) tỷ trọng   3.3% | ASP 16.03 |  0.00 | biên gộp  4.12 |  0.00 | SL    20,841 |         0
+  TNHH MTV Tôn Đông Á Đà Nẵng | Văn phòng đại di DT       69 |       91 ( -23.9%) tỷ trọng   0.7% | ASP 18.09 | 18.75 | biên gộp  4.40 |  5.02 | SL     3,809 |     4,832
 
--- PARETO --
-  Top 20% SKU = 63.4% doanh thu
-  [PASS] Pareto top20% SKU ~ 55-90% revenue — 63.4%
+-- CTTV: theo công ty (9T/2026 so 9T/2025) --
+  Công ty Cổ phần Tôn Đông Á                     DT    7,264 |    9,380 ( -22.6%) tỷ trọng  71.9% | ASP 19.43 | 20.32 | biên gộp  6.94 |  7.99 | SL   373,845 |   461,612
+  Công ty TNHH MTV Tôn Đông Á Bắc Ninh           DT    1,430 |    1,183 ( +20.9%) tỷ trọng  14.2% | ASP 19.60 | 20.09 | biên gộp  5.99 |  6.42 | SL    72,922 |    58,875
+  Công ty TNHH MTV Tôn Đông Á Long An            DT      785 |      638 ( +23.1%) tỷ trọng   7.8% | ASP 20.31 | 20.55 | biên gộp  6.16 |  6.58 | SL    38,648 |    31,035
+  Công ty TNHH MTV Tôn Đông Á Đà Nẵng            DT      621 |      699 ( -11.1%) tỷ trọng   6.2% | ASP 18.01 | 18.94 | biên gộp  3.93 |  4.91 | SL    34,508 |    36,912
+  [PASS] Bắc Ninh tăng (%): 20.9  (khoảng chấp nhận 15.0 – 25.0)
+  [PASS] Đà Nẵng giảm (%): -11.1  (khoảng chấp nhận -16.0 – -7.0)
+  [PASS] Biên gộp Đà Nẵng thấp nhất (%): 3.93  (khoảng chấp nhận 1.00 – 4.00)
 
--- INTEGRITY --
-  [PASS] FK hợp lệ (customer/product/region)
-  [PASS] fact_sales 1-1 fact_cogs
-  [PASS] revenue>0 & quantity>0
-  [PASS] ASP mỗi dòng trong 15-32 triệu/tấn
-  [PASS] net_revenue ≈ quantity × asp
-  [PASS] Mọi tháng đều có giao dịch — 18/18
-======================================================================
+-- UAT 17: nhóm hàng trong Tôn kẽm (9T/2026 so 9T/2025) --
+  Tôn kẽm Z120                                   DT      625 |    1,081 ( -42.2%) tỷ trọng  36.3% | ASP 17.47 | 18.79 | biên gộp  2.43 |  7.61 | SL    35,786 |    57,539
+  Tôn kẽm Z180                                   DT      439 |      751 ( -41.6%) tỷ trọng  25.5% | ASP 17.96 | 19.05 | biên gộp  6.42 |  8.30 | SL    24,421 |    39,445
+  Tôn kẽm Z275                                   DT      350 |      529 ( -33.8%) tỷ trọng  20.3% | ASP 18.42 | 19.49 | biên gộp  6.12 |  8.42 | SL    19,002 |    27,142
+  Tôn kẽm Z80                                    DT      309 |      609 ( -49.3%) tỷ trọng  17.9% | ASP 17.12 | 18.52 | biên gộp  6.41 |  8.00 | SL    18,031 |    32,894
+  [PASS] Biên gộp Tôn kẽm Z120 9T/2026 (%): 2.43  (khoảng chấp nhận 2.00 – 3.00)
+
+-- UAT 17: mã sản phẩm trong Tôn kẽm Z120 (9T/2026 so 9T/2025) --
+  TK-Z120-040                                    DT      244 |      380 ( -35.7%) tỷ trọng  39.1% | ASP 17.40 | 18.70 | biên gộp  1.67 |  7.63 | SL    14,027 |    20,299
+  TK-Z120-035                                    DT      186 |      418 ( -55.6%) tỷ trọng  29.7% | ASP 17.58 | 18.94 | biên gộp  2.64 |  7.67 | SL    10,561 |    22,064
+  TK-Z120-045                                    DT      136 |      167 ( -18.4%) tỷ trọng  21.8% | ASP 17.29 | 18.62 | biên gộp  1.65 |  7.55 | SL     7,867 |     8,951
+  TK-Z120-030                                    DT       59 |      117 ( -49.3%) tỷ trọng   9.5% | ASP 17.77 | 18.78 | biên gộp  6.65 |  7.46 | SL     3,332 |     6,224
+
+-- UAT 7: sản lượng 12 tháng gần nhất --
+  10/2025:    53,690 tấn
+  11/2025:    52,412 tấn
+  12/2025:    51,671 tấn
+  01/2026:    57,848 tấn
+  02/2026:    45,779 tấn
+  03/2026:    59,220 tấn
+  04/2026:    61,386 tấn
+  05/2026:    60,274 tấn
+  06/2026:    58,567 tấn
+  07/2026:    60,216 tấn
+  08/2026:    57,748 tấn
+  09/2026:    58,884 tấn
+
+-- CTTV 4: giao dịch nội bộ 9T/2026 --
+  Công ty TNHH MTV Tôn Đông Á Long An: 655 tỷ
+  Công ty TNHH MTV Tôn Đông Á Bắc Ninh: 1,206 tỷ
+  Công ty TNHH MTV Tôn Đông Á Đà Nẵng: 425 tỷ
+  Tổng nội bộ 2,286 tỷ | cộng gộp 12,386 tỷ | sau loại trừ 10,100 tỷ
+  [PASS] Nội bộ / doanh thu cộng gộp (%): 18.5  (khoảng chấp nhận 14.0 – 20.0)
+
+-- TOÀN VẸN --
+  [PASS] Số dòng sai công thức doanh thu thuần hoặc giá trị không hợp lệ: 0  (khoảng chấp nhận 0 – 0)
+  [PASS] Số tháng có giao dịch: 33  (khoảng chấp nhận 33 – 33)
+  [PASS] Doanh thu Hoa Kỳ, Mexico từ 10/2024 (tỷ): 0  (khoảng chấp nhận 0 – 0)
+
+TẤT CẢ ĐẠT
