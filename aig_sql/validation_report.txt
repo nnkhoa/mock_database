@@ -1,0 +1,116 @@
+AIG — aig_demo | VALIDATION REPORT (Phase D)
+====================================================================================================
+
+## Kỹ thuật
+----------------------------------------------------------------------------------------------------
+[PASS] Schema khớp database-schema.md
+        thực tế: SCHEMA OK: 18 bảng nghiệp vụ, 195 cột khớp y hệt database-schema.md (tên, thứ tự, kiểu, PK, FK) + 4 bảng metad
+[PASS] Không orphan: HĐ XK / khách / lô tồn ACC↔nhập / product_group / SKU đúng entity
+        thực tế: 0/0/0/0/0   | mục tiêu: 0/0/0/0/0
+[PASS] SUM(fact_sales) = fact_pnl_monthly (doanh thu, giá vốn) theo entity × tháng
+        thực tế: 245 dòng; lệch DT 0, GV 0   | mục tiêu: lệch 0
+[PASS] P&L: LN gộp = DT − GV − DP; LNTT theo công thức; LNST = LNTT − thuế
+        thực tế: 0/0/0   | mục tiêu: 0/0/0
+[PASS] fact_sales: LN gộp = DT − GV; DT = SL × giá
+        thực tế: 0/0   | mục tiêu: 0/0
+[PASS] Mọi ngày làm việc đều có hóa đơn ACC
+        thực tế: 822 ngày làm việc, 0 ngày trống   | mục tiêu: 0 ngày trống
+[PASS] Nhà máy có hóa đơn ≥ 4 ngày/tuần (tuần đủ 6 ngày làm việc)
+        thực tế: 668 entity-tuần, 0 tuần < 4 ngày   | mục tiêu: 0
+[PASS] DT > 0, SL > 0, không hóa đơn Chủ Nhật / ngày lễ
+        thực tế: 0/0/0/0   | mục tiêu: 0/0/0/0
+[PASS] Giá bán BQ 2025 đúng magnitude (12 nhóm hàng tiêu biểu)
+        thực tế: tất cả trong khoảng
+[PASS] Tồn kho: (ngày chốt, kho, SKU, lô) duy nhất — không cộng dồn
+        thực tế: 0   | mục tiêu: 0
+[PASS] Công nợ: dư nợ = tổng các nhóm tuổi nợ
+        thực tế: 0/0   | mục tiêu: 0/0
+
+## Thống kê
+----------------------------------------------------------------------------------------------------
+[PASS] DT quý tập đoàn khớp C0 (±0,5%)
+        thực tế: sai lệch lớn nhất 0.010%   | mục tiêu: ±0,5%
+[PASS] DT quý theo mảng (ACC, Sản xuất, ACP, GCF, AFI+AHS+ASI+MDG) khớp C0 (±1%)
+        thực tế: sai lệch lớn nhất 0.060%   | mục tiêu: ±1%
+[PASS] DT năm 2024 = 12.386, 2025 = 15.459
+        thực tế: 12,385.1 / 15,458.2
+[PASS] DT năm AFI/AHS/ASI/MDG 2024–2025 khớp phân bổ
+        thực tế: sai lệch lớn nhất 0.40%   | mục tiêu: ±1%
+[PASS] 6T/2026 doanh thu 8.221 (±0,5%)
+        thực tế: 8,220.7
+[PASS] 6T/2026 LNST 844 (±1%)
+        thực tế: 844.0
+[PASS] 6T/2026 biên gộp báo cáo 19,5% (±0,2)
+        thực tế: 19.44%
+[PASS] 6T/2026 xuất khẩu 1.724 (±1%), theo entity ACP 850/GCF 350/AFI 210/AHS 130/ASI 95/MDG 89
+        thực tế: 1,724 / 850 / 350 / 210 / 130 / 95 / 89
+[PASS] Xuất khẩu 2024 ~2.050; 2025 ~2.600 (6T/2025 ~1.157) — mục tiêu mềm, xem README
+        thực tế: 2024 2,074; 2025 2,647; 6T/2025 1,108
+[PASS] Biên gộp trước DP theo quý ACC / ACP / SX khác khớp C0 (±0,3 điểm)
+        thực tế: lệch lớn nhất 0.30 điểm   | mục tiêu: ±0,3
+[PASS]   chi tiết biên quý 2024-1
+        thực tế: 12.10/30.40/23.30/TĐ 16.34   | mục tiêu: ACC/ACP/SX khác/Tập đoàn
+[PASS]   chi tiết biên quý 2024-2
+        thực tế: 12.10/30.20/23.10/TĐ 16.28   | mục tiêu: ACC/ACP/SX khác/Tập đoàn
+[PASS]   chi tiết biên quý 2024-3
+        thực tế: 11.60/29.80/22.90/TĐ 15.84   | mục tiêu: ACC/ACP/SX khác/Tập đoàn
+[PASS]   chi tiết biên quý 2024-4
+        thực tế: 11.40/29.60/22.70/TĐ 15.58   | mục tiêu: ACC/ACP/SX khác/Tập đoàn
+[PASS]   chi tiết biên quý 2025-1
+        thực tế: 11.75/26.25/23.05/TĐ 15.66   | mục tiêu: ACC/ACP/SX khác/Tập đoàn
+[PASS]   chi tiết biên quý 2025-2
+        thực tế: 11.30/22.00/24.10/TĐ 15.06   | mục tiêu: ACC/ACP/SX khác/Tập đoàn
+[PASS]   chi tiết biên quý 2025-3
+        thực tế: 11.60/22.00/28.70/TĐ 16.29   | mục tiêu: ACC/ACP/SX khác/Tập đoàn
+[PASS]   chi tiết biên quý 2025-4
+        thực tế: 11.40/22.80/29.80/TĐ 16.58   | mục tiêu: ACC/ACP/SX khác/Tập đoàn
+[PASS]   chi tiết biên quý 2026-1
+        thực tế: 12.20/36.00/31.00/TĐ 19.13   | mục tiêu: ACC/ACP/SX khác/Tập đoàn
+[PASS]   chi tiết biên quý 2026-2
+        thực tế: 12.40/38.00/31.50/TĐ 19.81   | mục tiêu: ACC/ACP/SX khác/Tập đoàn
+[PASS]   chi tiết biên quý 2026-3
+        thực tế: 10.20/10.00/29.00/TĐ 14.13   | mục tiêu: ACC/ACP/SX khác/Tập đoàn
+[PASS] Biên gộp 2024 ~16,0% (6T/2024 16,3%); 6T/2025 15,2%
+        thực tế: 2024 15.98%, 6T/2024 16.31%, 6T/2025 (báo cáo) 15.28%
+[PASS] LNST theo quý khớp C0 (±1%)
+        thực tế: lệch lớn nhất 0.000%; 2024-1 205.0, 2024-2 227.0, 2024-3 203.0, 2024-4 207.0, 2025-1 263.0, 2025-2 237.0, 2025-3 270.0, 2025-4 289.0, 2026-1 398.0, 2026-2 446.0, 2026-3 172.0   | mục tiêu: ±1%
+[PASS] LNST 2024 = 842; 2025 = 1.059; 9T/2026 = 1.016
+        thực tế: 842.0 / 1059.0 / 1016.0
+[PASS] Dự phòng thường xuyên ACC: ±0,5–2 tỷ/tháng, 6–10 tỷ/năm
+        thực tế: 2024 7.6; 2025 8.4; 6T/2026 3.9; min/max tháng -2.0/2.5
+[PASS] Dự phòng Q3/2026 ACC: T8 18 tỷ, T9 30 tỷ (tổng 48)
+        thực tế: T7 0.0, T8 18.0, T9 30.0
+[PASS] CP hoạt động + tài chính thuần 6,3–8,3% DT mỗi quý
+        thực tế: tất cả trong khoảng   | mục tiêu: xem README nếu FAIL
+[PASS] CP bán hàng / QLDN / tỷ trọng QLDN AIG / thuế suất hiệu dụng
+        thực tế: 2024-1: BH 4.11% QL 2.31% AIG 25% thuế 21.0%; 2024-4: BH 4.67% QL 2.63% AIG 24% thuế 21.0%; 2025-3: BH 4.68% QL 2.60% AIG 25% thuế 21.0%; 2026-2: BH 3.88% QL 2.14% AIG 25% thuế 21.0%
+[PASS] Chênh lệch tỷ giá: 2024–25 lỗ 2–6 tỷ/quý; Q1–Q2/26 lãi; Q3/26 lỗ ~14
+        thực tế: 2024-1 -3.0, 2024-2 -5.0, 2024-3 -2.0, 2024-4 -6.0, 2025-1 -4.0, 2025-2 -6.0, 2025-3 -3.0, 2025-4 -3.0, 2026-1 2.0, 2026-2 1.5, 2026-3 -14.0
+[PASS] Pareto: top 20% SKU ACC (52/262) chiếm 78–82% DT ACC
+        thực tế: 79.3%
+[PASS] Mùa vụ ACC (năm đủ 12 tháng): T2 thấp nhất; tháng cao nhất trong T7–T11
+        thực tế: 2024: thấp T2, cao T10; 2025: thấp T2, cao T10
+[FAIL] Magnitude DT ACC/tháng 650–1.000 tỷ
+        thực tế: 525–1011 tỷ; 3 tháng ngoài khoảng (T2 Tết)   | mục tiêu: xem README
+[PASS] Giá NL & tỷ giá: BQ tháng khớp bảng C2 (±3%)
+        thực tế: DUA_KHO 0.00%, SMP_GLOBAL 0.00%, USD_VND 0.00%, EUR_VND 0.00%, SAN_TUOI 0.01%, WHEY_GLOBAL 0.00%
+[PASS] DSO BQ: ACC 50–55; nhà máy nội địa 35–45; xuất khẩu 35–50
+        thực tế: ACC 50.5; Nhà máy nội địa 41.0; Xuất khẩu 48.9
+[PASS] Tuổi nợ ACC: chưa hạn 75–80%, 1–30 12–15%, 31–60 5–7%, >60 2–3%
+        thực tế: 74.6 / 15.4 / 6.9 / 3.1
+[PASS] DIO bình quân (06/2024–09/2026): ACC 65–80; nhà máy 45–60; tập đoàn 30/09/2026 ~70–75
+        thực tế: BQ ACC 79 (min 70, max 87), NM 57; 30/09/2026 ACC 76 NM 57 TĐ 70
+[PASS] Hiệu suất công suất BQ 70–88% (MDG thấp do DT 2026 giảm — xem README)
+        thực tế: ACP 81% (58–97); AFI 88% (52–100); AHS 73% (45–90); ASI 84% (40–97); MDG 44% (16–68); GCF 87% (70–97)
+[PASS] KH_2026: DT 16.800, LNST 1.260; quý 3.850/280, 4.100/300, 4.350/330, 4.500/350; biên ~16,5%
+        thực tế: 16,800 / 1,260; biên Q: 16.6, 16.6, 16.6, 16.6
+[PASS] KH_2026 theo entity: ACC 66 / ACP 13 / AFI 10 / GCF 5 / AHS 4 / ASI 1 / MDG 1 (%)
+        thực tế: ACC 66.0, ACP 13.0, AFI 10.0, AHS 4.0, AIG 0.0, ASI 1.0, GCF 5.0, MDG 1.0
+[PASS] LE_T9_2026 (T10–T12): DT 4.480; LN gộp trước DP ~637; DP 15 (T11); sau DP ~622; LNST 209
+        thực tế: 4,480 / 637 / 15 / 622 / 209.0; 2026-10-01→2026-12-01
+[PASS] Cả năm 2026 theo LE: LNST 1.225 (hụt ~35); DT 16.981
+        thực tế: 1,225.0 / 16,980.5
+[PASS] fact_le_assumptions đủ 10 giả định
+        thực tế: 10
+
+Tổng: 52 PASS, 1 FAIL

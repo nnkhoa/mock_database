@@ -1,0 +1,305 @@
+AIG — aig_demo | KẾT QUẢ CHẠY THỬ SQL KỊCH BẢN DEMO (S1–S6, F1–F3)
+
+--- S1: 9T/2026 vs cùng kỳ
+SELECT YEAR(period_month) y, SUM(net_revenue_vnd)/1e9 dt_ty, SUM(profit_after_tax_vnd)/1e9 lnst_ty
+FROM fact_pnl_monthly
+WHERE period_month BETWEEN '2025-01-01' AND '2026-09-01' AND MONTH(period_month) <= 9
+GROUP BY y;
+>>>
+   2025 | 11118.132337373 | 770
+   2026 | 12500.487390382 | 1016
+
+--- S1: kế hoạch
+SELECT SUM(net_revenue_vnd)/1e9, SUM(profit_after_tax_vnd)/1e9 FROM fact_plan_monthly WHERE scenario='KH_2026';
+>>>
+   16799.999999997 | 1260
+
+--- S1: biên gộp theo entity × quý 2026
+SELECT entity_id, QUARTER(period_month) q,
+       SUM(gross_profit_vnd)/SUM(net_revenue_vnd)*100 gm_bc,
+       SUM(net_revenue_vnd - cogs_vnd)/SUM(net_revenue_vnd)*100 gm_truoc_dp
+FROM fact_pnl_monthly WHERE YEAR(period_month)=2026 AND net_revenue_vnd > 0
+GROUP BY entity_id, q ORDER BY entity_id, q;
+>>>
+   ACC | 1 | 12.1354 | 12.2000
+   ACC | 2 | 12.3213 | 12.4000
+   ACC | 3 | 8.5216 | 10.2000
+   ACP | 1 | 36.0000 | 36.0000
+   ACP | 2 | 38.0000 | 38.0000
+   ACP | 3 | 10.0000 | 10.0000
+   AFI | 1 | 31.6766 | 31.6766
+   AFI | 2 | 32.6264 | 32.6264
+   AFI | 3 | 28.5117 | 28.5117
+   AHS | 1 | 18.5000 | 18.5000
+   AHS | 2 | 18.6000 | 18.6000
+   AHS | 3 | 18.0000 | 18.0000
+   ASI | 1 | 37.5000 | 37.5000
+   ASI | 2 | 37.5000 | 37.5000
+   ASI | 3 | 37.0000 | 37.0000
+   GCF | 1 | 40.0000 | 40.0000
+   GCF | 2 | 40.0000 | 40.0000
+   GCF | 3 | 37.5000 | 37.5000
+   MDG | 1 | 26.0000 | 26.0000
+   MDG | 2 | 26.2000 | 26.2000
+   MDG | 3 | 25.0000 | 25.0000
+
+--- S2: giá dừa theo tháng
+SELECT DATE_FORMAT(price_date,'%Y-%m') m, AVG(price) gia_dua FROM fact_commodity_prices
+WHERE commodity_code='DUA_KHO' AND price_date >= '2025-01-01' GROUP BY m ORDER BY m;
+>>>
+   2025-01 | 9800.000000
+   2025-02 | 10497.500000
+   2025-03 | 11200.000000
+   2025-04 | 12202.500000
+   2025-05 | 12802.500000
+   2025-06 | 13400.000000
+   2025-07 | 13100.000000
+   2025-08 | 13900.000000
+   2025-09 | 13502.000000
+   2025-10 | 12800.000000
+   2025-11 | 11800.000000
+   2025-12 | 10800.000000
+   2026-01 | 8000.000000
+   2026-02 | 5500.000000
+   2026-03 | 4500.000000
+   2026-04 | 4802.500000
+   2026-05 | 5600.000000
+   2026-06 | 6800.000000
+   2026-07 | 10500.000000
+   2026-08 | 14798.000000
+   2026-09 | 17600.000000
+
+--- S2: đơn giá dừa & giá thành ACP
+SELECT production_month, SUM(raw_material_cost_vnd)/SUM(raw_material_qty) don_gia_dua,
+       SUM(raw_material_cost_vnd+conversion_cost_vnd)/SUM(output_kg) gia_thanh
+FROM fact_production WHERE entity_id='ACP' AND production_month >= '2025-01-01'
+GROUP BY production_month ORDER BY production_month;
+>>>
+   2025-01-01 | 9705.0712 | 41696.4307
+   2025-02-01 | 10504.2738 | 39021.1417
+   2025-03-01 | 11136.5654 | 40428.4431
+   2025-04-01 | 12282.0637 | 44704.1996
+   2025-05-01 | 12759.5318 | 46503.5169
+   2025-06-01 | 13402.5492 | 46646.9651
+   2025-07-01 | 13217.5036 | 43932.1745
+   2025-08-01 | 13854.0746 | 44488.7823
+   2025-09-01 | 13567.4813 | 48634.3066
+   2025-10-01 | 12835.6638 | 45656.8402
+   2025-11-01 | 11864.2212 | 45915.0118
+   2025-12-01 | 11084.2372 | 45267.2815
+   2026-01-01 | 8010.9969 | 41841.6304
+   2026-02-01 | 5537.1446 | 36572.1496
+   2026-03-01 | 4483.4737 | 35300.2677
+   2026-04-01 | 4735.0988 | 31497.0321
+   2026-05-01 | 5738.4534 | 32172.9008
+   2026-06-01 | 6729.1431 | 36256.3547
+   2026-07-01 | 10380.9839 | 42237.2958
+   2026-08-01 | 14744.2528 | 52448.3668
+   2026-09-01 | 17455.3699 | 53839.9917
+
+--- S2: hợp đồng giá cố định
+SELECT sign_date, export_market_id, fixed_price_usd_per_ton, has_price_adjustment_clause, end_date
+FROM fact_export_contracts WHERE entity_id='ACP' AND sign_date >= '2026-04-01';
+>>>
+   2026-04-22 | AU | 1751.00 | 1 | 2026-12-31
+   2026-05-02 | EU | 1984.00 | 1 | 2026-06-30
+   2026-04-27 | EU | 1927.00 | 0 | 2026-11-30
+   2026-04-02 | EU | 2667.00 | 0 | 2026-11-30
+   2026-05-17 | US | 2440.00 | 0 | 2026-11-30
+   2026-06-21 | EU | 1947.00 | 0 | 2026-11-30
+   2026-04-10 | US | 6661.00 | 0 | 2026-12-31
+   2026-05-20 | US | 1905.00 | 0 | 2026-12-31
+   2026-06-02 | EU | 2774.00 | 0 | 2026-12-31
+   2026-06-20 | EU | 1726.00 | 0 | 2026-12-31
+   2026-04-26 | US | 1721.00 | 0 | 2027-01-31
+   2026-05-19 | EU | 1737.00 | 0 | 2027-01-31
+   2026-05-18 | EU | 4471.00 | 0 | 2027-01-31
+   2026-06-03 | JP | 1935.00 | 0 | 2027-01-31
+   2026-04-16 | KR | 1718.00 | 0 | 2027-03-31
+   2026-05-12 | KR | 1916.00 | 0 | 2027-03-31
+   2026-06-23 | EU | 1720.00 | 0 | 2027-03-31
+   2026-06-24 | US | 1916.00 | 0 | 2027-03-31
+   2026-06-20 | US | 4469.00 | 0 | 2027-03-31
+   2026-06-08 | US | 2759.00 | 0 | 2027-06-30
+
+--- S3: khách ACC tăng trưởng nhưng giảm biên + tăng DSO
+WITH cur AS (
+  SELECT customer_id, SUM(net_revenue_vnd) dt, SUM(gross_profit_vnd) gp
+  FROM fact_sales WHERE entity_id='ACC' AND invoice_date BETWEEN '2026-07-01' AND '2026-09-30' GROUP BY customer_id),
+prev AS (
+  SELECT customer_id, SUM(net_revenue_vnd) dt, SUM(gross_profit_vnd) gp
+  FROM fact_sales WHERE entity_id='ACC' AND invoice_date BETWEEN '2025-07-01' AND '2025-09-30' GROUP BY customer_id)
+SELECT c.customer_id, d.customer_name, c.dt/1e9 dt_q3_26, (c.dt/p.dt-1)*100 tang_truong,
+       p.gp/p.dt*100 gm_q3_25, c.gp/c.dt*100 gm_q3_26,
+       (SELECT dso_days FROM fact_receivable_snapshots r WHERE r.customer_id=c.customer_id AND r.entity_id='ACC' AND snapshot_date='2026-09-30') dso_now,
+       (SELECT dso_days FROM fact_receivable_snapshots r WHERE r.customer_id=c.customer_id AND r.entity_id='ACC' AND snapshot_date='2026-03-31') dso_t3
+FROM cur c JOIN prev p USING(customer_id) JOIN dim_customers d USING(customer_id)
+ORDER BY c.dt DESC LIMIT 10;
+>>>
+   KH-ACC-0007 | CTCP Sữa Đồng Xanh | 199.795811016 | 18.5988 | 11.5733 | 6.2961 | 83.5 | 42.2
+   KH-ACC-0002 | Công ty TNHH Bánh kẹo Hòa Phong | 180.447629783 | 0.3364 | 9.6036 | 9.4610 | 50.0 | 45.7
+   KH-ACC-0001 | CTCP Sữa Phương Nam Xanh | 160.177349891 | -1.3412 | 8.5210 | 7.8677 | 58.5 | 54.2
+   KH-ACC-0005 | CTCP Nước giải khát Thiên Lam | 98.450380627 | -2.7648 | 10.1672 | 8.6372 | 55.9 | 60.4
+   KH-ACC-0003 | Công ty TNHH Mì Á Đông | 87.262221775 | -4.0243 | 9.3977 | 7.6761 | 62.1 | 56.1
+   KH-ACC-0012 | CTCP Sữa Cao Nguyên Việt | 81.803820952 | -3.2103 | 8.3687 | 8.7189 | 58.9 | 41.6
+   KH-ACC-0009 | CTCP Bánh kẹo Ngọc Lan | 81.209917377 | 6.2502 | 9.0955 | 8.9256 | 44.8 | 51.7
+   KH-ACC-0019 | Công ty TNHH Dinh dưỡng Bình Minh | 71.895648078 | -12.5038 | 11.7026 | 10.9562 | 54.0 | 37.7
+   KH-ACC-0004 | CTCP Hóa mỹ phẩm Phương Đông | 62.046859012 | 11.4259 | 8.9878 | 7.4495 | 54.0 | 53.3
+   KH-ACC-0010 | Công ty TNHH Đồ uống Sông Tiền | 61.540870751 | 7.7080 | 13.4266 | 12.0676 | 63.2 | 71.8
+
+--- S3: điều khoản KH-ACC-0007
+SELECT * FROM fact_contract_terms WHERE customer_id='KH-ACC-0007';
+>>>
+   14 | KH-ACC-0007 | ACC | 2023-01-01 | 2026-03-31 | 45 | 2.50 | Giám đốc Kinh doanh ACC | 2022-12-20 | Hợp đồng khung năm
+   15 | KH-ACC-0007 | ACC | 2026-04-01 | NULL | 75 | 7.00 | Giám đốc Ngành hàng Sữa – ACC | 2026-03-25 | Ưu đãi để tăng sản lượng năm 2026
+
+--- S4: tồn kho cận date theo nhóm hàng tại 30/09/2026
+SELECT p.category_l2, pr.principal_name, i.warehouse_id,
+       SUM(i.inventory_value_vnd)/1e9 ton_ty,
+       SUM(CASE WHEN i.days_to_expiry < 92 THEN i.inventory_value_vnd ELSE 0 END)/1e9 can_date_ty,
+       SUM(i.provision_balance_vnd)/1e9 du_phong_ty
+FROM fact_inventory_snapshots i JOIN dim_products p USING(product_id)
+LEFT JOIN dim_principals pr ON pr.principal_id = p.principal_id
+WHERE i.snapshot_date='2026-09-30'
+GROUP BY p.category_l2, pr.principal_name, i.warehouse_id ORDER BY can_date_ty DESC LIMIT 10;
+>>>
+   Bột sữa gầy SMP | Nordvik Dairy | WH-BD | 118.001309067 | 66.000636965 | 48
+   Gum & pectin | Rhinebrook Hydrocolloids | WH-TT | 19.174359162 | 0.46224514 | 0.264466793
+   Hương liệu trái cây | Helvara Flavours | WH-BD | 44.338710342 | 0.435399069 | 0.30223043
+   Hương liệu sữa | Helvara Flavours | WH-TT | 13.802478432 | 0.369542397 | 0.246354045
+   Hương liệu trái cây | Helvara Flavours | WH-DN | 6.086853707 | 0.36435082 | 0.216361808
+   Hương liệu trái cây | Helvara Flavours | WH-TT | 7.258399328 | 0.319788259 | 0.177729054
+   Chất béo chuyên dụng | Lindqvist Specialty Fats | WH-TT | 10.216349568 | 0.305366372 | 0.203152049
+   Shortening | Lindqvist Specialty Fats | WH-TT | 6.973570951 | 0.264033921 | 0.21795414
+   Tinh bột biến tính | Pacific Starch Thai | WH-BD | 57.377149905 | 0.23481982 | 0.219267303
+   Shortening | Lindqvist Specialty Fats | WH-DN | 7.313554129 | 0.1975448 | 0.129005475
+
+--- S5: LE
+SELECT SUM(profit_after_tax_vnd)/1e9 FROM fact_plan_monthly WHERE scenario='LE_T9_2026';
+>>>
+   209
+
+--- S5: giả định LE
+SELECT assumption_code, assumption_value, unit FROM fact_le_assumptions WHERE scenario='LE_T9_2026';
+>>>
+   DUA_KHO_AVG | 16400.0000 | VND/trái
+   USD_VND_AVG | 26950.0000 | VND
+   EUR_VND_AVG | 31300.0000 | VND
+   ACC_FX_COGS_SHARE | 0.6800 | tỷ lệ
+   ACC_PRICE_PASS_LAG_DAYS | 45.0000 | ngày
+   ACC_USD_PAYABLES | 25000000.0000 | USD
+   ACP_COCONUT_COST_SHARE | 0.5500 | tỷ lệ
+   ACP_FIXED_PRICE_EXPORT_SHARE | 0.8000 | tỷ lệ
+   SMP_SECOND_PROVISION | 15000000000.0000 | VND
+   CIT_RATE | 0.2100 | tỷ lệ
+
+--- S6: LE vs KH
+SELECT (SELECT SUM(profit_after_tax_vnd) FROM fact_pnl_monthly WHERE YEAR(period_month)=2026)/1e9
+     + (SELECT SUM(profit_after_tax_vnd) FROM fact_plan_monthly WHERE scenario='LE_T9_2026')/1e9 AS lnst_ca_nam_le,
+       (SELECT SUM(profit_after_tax_vnd) FROM fact_plan_monthly WHERE scenario='KH_2026')/1e9 AS lnst_kh;
+>>>
+   1225 | 1260
+
+--- S6: khách có thể tiêu thụ SMP
+SELECT s.customer_id, c.customer_name, c.industry_segment, SUM(s.quantity_kg)/1000/12 tan_thang
+FROM fact_sales s JOIN dim_customers c USING(customer_id) JOIN dim_products p USING(product_id)
+WHERE p.category_l2 LIKE '%SMP%' AND s.invoice_date >= '2025-10-01'
+GROUP BY s.customer_id, c.customer_name, c.industry_segment ORDER BY tan_thang DESC LIMIT 10;
+>>>
+   KH-ACC-0001 | CTCP Sữa Phương Nam Xanh | Sữa & sản phẩm sữa | 150.9937500000
+   KH-ACC-0019 | Công ty TNHH Dinh dưỡng Bình Minh | Sữa & sản phẩm sữa | 121.4625000000
+   KH-ACC-0007 | CTCP Sữa Đồng Xanh | Sữa & sản phẩm sữa | 46.9625000000
+   KH-ACC-0012 | CTCP Sữa Cao Nguyên Việt | Sữa & sản phẩm sữa | 40.4812500000
+   KH-ACC-0002 | Công ty TNHH Bánh kẹo Hòa Phong | Bánh kẹo | 37.0458333333
+   KH-ACC-0009 | CTCP Bánh kẹo Ngọc Lan | Bánh kẹo | 29.0583333333
+   KH-ACC-0224 | Công ty TNHH Trà sữa Tín Nghĩa | Food service & chuỗi F&B | 26.7916666667
+   KH-ACC-0031 | Công ty TNHH Sữa Thanh Bình | Sữa & sản phẩm sữa | 18.1208333333
+   KH-ACC-0011 | Công ty TNHH Chuỗi Cà phê Bến Thành Xanh | Food service & chuỗi F&B | 16.9833333333
+   KH-ACC-0022 | Công ty TNHH Thực phẩm Dinh dưỡng Bảo Ng | Sữa & sản phẩm sữa | 16.1125000000
+
+--- F1: XK theo thị trường 2025 vs 9T/2026
+SELECT export_market_id, YEAR(invoice_date) y, SUM(net_revenue_vnd)/1e9 FROM fact_sales
+WHERE sale_type='Xuất khẩu' GROUP BY export_market_id, y;
+>>>
+   ASEAN | 2024 | 106.722629783
+   ASEAN | 2025 | 129.363393938
+   ASEAN | 2026 | 124.468096019
+   AU | 2024 | 96.284759373
+   AU | 2025 | 109.398311074
+   AU | 2026 | 100.296480576
+   CN | 2024 | 480.078244647
+   CN | 2025 | 523.119427862
+   CN | 2026 | 458.342162186
+   EU | 2024 | 434.042316207
+   EU | 2025 | 510.753082822
+   EU | 2026 | 492.111401302
+   JP | 2024 | 85.582726321
+   JP | 2025 | 278.028943639
+   JP | 2026 | 284.675397882
+   KR | 2024 | 180.60638143
+   KR | 2025 | 209.151007272
+   KR | 2026 | 204.836530115
+   ME | 2024 | 154.268424531
+   ME | 2025 | 191.443481601
+   ME | 2026 | 185.102696726
+   US | 2024 | 536.346095423
+   US | 2025 | 695.488501364
+   US | 2026 | 746.977849683
+
+--- F2: hiệu suất AHS
+SELECT production_month, AVG(utilization_pct) FROM fact_production WHERE entity_id='AHS' GROUP BY production_month;
+>>>
+   2024-01-01 | 48.403333
+   2024-02-01 | 67.140000
+   2024-03-01 | 60.603333
+   2024-04-01 | 63.066667
+   2024-05-01 | 61.460000
+   2024-06-01 | 75.413333
+   2024-07-01 | 66.156667
+   2024-08-01 | 66.830000
+   2024-09-01 | 92.873333
+   2024-10-01 | 75.270000
+   2024-11-01 | 74.310000
+   2024-12-01 | 67.943333
+   2025-01-01 | 46.096667
+   2025-02-01 | 87.750000
+   2025-03-01 | 72.873333
+   2025-04-01 | 74.970000
+   2025-05-01 | 75.870000
+   2025-06-01 | 74.543333
+   2025-07-01 | 82.673333
+   2025-08-01 | 73.610000
+   2025-09-01 | 80.123333
+   2025-10-01 | 77.326667
+   2025-11-01 | 70.703333
+   2025-12-01 | 79.296667
+   2026-01-01 | 63.840000
+
+--- F3: ACC theo ngành × vùng 2025
+SELECT c.industry_segment, c.region, SUM(s.net_revenue_vnd)/1e9 FROM fact_sales s JOIN dim_customers c USING(customer_id)
+WHERE s.entity_id='ACC' AND YEAR(s.invoice_date)=2025 GROUP BY 1,2;
+>>>
+   Sữa & sản phẩm sữa | Miền Nam | 1932.144270675
+   Bánh kẹo | Miền Nam | 1354.500130165
+   Đồ uống | Miền Nam | 900.29558418
+   Mì gói & thực phẩm tiện lợi | Miền Nam | 436.572166079
+   Sữa & sản phẩm sữa | Miền Bắc | 486.090263041
+   Food service & chuỗi F&B | Miền Nam | 398.69047981
+   Mì gói & thực phẩm tiện lợi | Miền Bắc | 631.15309741
+   Bánh kẹo | Miền Bắc | 422.32253533
+   Đồ uống | Miền Bắc | 599.231098181
+   Dược & thực phẩm chức năng | Miền Bắc | 209.984634515
+   Sữa & sản phẩm sữa | Miền Trung | 134.382398606
+   Bánh kẹo | Miền Trung | 113.968651984
+   Đồ uống | Miền Trung | 179.204830448
+   Mì gói & thực phẩm tiện lợi | Miền Trung | 185.895489219
+   Thịt & thủy sản chế biến | Miền Bắc | 304.438682877
+   Thịt & thủy sản chế biến | Miền Nam | 511.624533757
+   Thịt & thủy sản chế biến | Miền Trung | 134.598483547
+   Food service & chuỗi F&B | Miền Trung | 196.740720968
+   Food service & chuỗi F&B | Miền Bắc | 254.668903455
+   Mỹ phẩm & hóa chất CN | Miền Nam | 615.26578937
+   Mỹ phẩm & hóa chất CN | Miền Trung | 17.457373093
+   Mỹ phẩm & hóa chất CN | Miền Bắc | 86.435361962
+   Dược & thực phẩm chức năng | Miền Trung | 65.112340929
+   Dược & thực phẩm chức năng | Miền Nam | 341.188307087
