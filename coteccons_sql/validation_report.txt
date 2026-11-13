@@ -1,0 +1,194 @@
+
+================ 1. KỸ THUẬT ================
+[PASS] Liên kết logic không orphan (bids.project_id, changes.variation_order_id, sub_var.linked_vo) + FK khai báo do MySQL bảo đảm: 0
+[PASS] SUM(project_monthly.revenue/cost) theo tháng = corporate_pnl (sai lệch 0): 0
+[PASS] revenue = EV + điều chỉnh giá; LN gộp = DT − giá vốn: 0
+[PASS] net_project_cash_flow = tổng thu − tổng chi: 0
+[PASS] total_receivable = tổng thành phần: 0
+[PASS] SUM(project_costs) actual/budget = project_monthly theo dự án × tháng: 0 lệch, 0 thiếu
+[PASS] backlog = HĐ hiện hành − DT lũy kế; HĐ hiện hành = SUM(contract_changes) đến ngày chốt: 0 / 0
+[PASS] certified ≤ submitted; submitted ≤ certified ≤ invoice ≤ paid; days_to_certify đúng: 0
+[PASS] SUM(labor_cost) workforce = NC-TODOI (±1%): 0
+[PASS] Không hồ sơ nộp vào ngày lễ / Chủ nhật: 0
+[PASS] Mọi dự án 'Đang thi công' có dòng ở mọi tháng từ khởi công: 0
+
+================ 2. THỐNG KÊ – BẢNG MỐC C0 ================
+C0.1  Quý      DT thực tế / mục tiêu        Biên gộp TT / MT       LNST TT / MT
+[PASS] C0.1 Q1 NĐTC 2025: DT 4,644 / 4,644  biên 3.26% / 3.29%  LNST 93.0 / 93
+[PASS] C0.1 Q2 NĐTC 2025: DT 6,886 / 6,886  biên 2.93% / 2.90%  LNST 106.0 / 106
+[PASS] C0.1 Q3 NĐTC 2025: DT 5,004 / 5,004  biên 3.60% / 3.60%  LNST 57.0 / 57
+[PASS] C0.1 Q4 NĐTC 2025: DT 8,351 / 8,351  biên 3.73% / 3.70%  LNST 200.0 / 200
+[PASS] C0.1 Q1 NĐTC 2026: DT 7,452 / 7,452  biên 4.63% / 4.63%  LNST 293.0 / 293
+[PASS] C0.1 Q2 NĐTC 2026: DT 10,007 / 10,007  biên 4.31% / 4.30%  LNST 228.0 / 228
+[PASS] C0.1 Q3 NĐTC 2026: DT 6,409 / 6,409  biên 4.49% / 4.49%  LNST 119.0 / 119
+[PASS] C0.1 Q4 NĐTC 2026: DT 10,471 / 10,471  biên 4.42% / 4.40%  LNST 148.0 / 148
+[PASS] C0.1 Q1 NĐTC 2027: DT 11,269 / 11,269  biên 4.99% / 4.99%  LNST 305.0 / 305
+      NĐTC 2025: DT 24,885  LNST 456.0
+      NĐTC 2026: DT 34,339  LNST 788.0
+[PASS] C0.1 phân bổ tháng trong quý (±2 điểm): tất cả quý khớp
+
+C0.2  Tỷ trọng / biên theo mảng
+[PASS] C0.2 Q1 NĐTC 2025: DD 53.2%/3.00 CN 34.2%/3.72 HT 1.2%/4.85 ND 8.4%/2.13 QT 3.0%/5.21
+[PASS] C0.2 Q2 NĐTC 2025: DD 53.4%/2.69 CN 34.3%/3.32 HT 1.6%/4.64 ND 7.7%/1.79 QT 3.0%/4.74
+[PASS] C0.2 Q3 NĐTC 2025: DD 51.7%/3.32 CN 34.0%/4.07 HT 2.4%/5.24 ND 8.9%/2.42 QT 3.0%/5.51
+[PASS] C0.2 Q4 NĐTC 2025: DD 49.9%/3.45 CN 33.6%/4.19 HT 2.6%/5.36 ND 10.9%/2.70 QT 3.0%/5.63
+[PASS] C0.2 Q1 NĐTC 2026: DD 48.5%/4.22 CN 33.0%/5.26 HT 6.0%/6.17 ND 9.5%/3.11 QT 3.0%/6.01
+[PASS] C0.2 Q2 NĐTC 2026: DD 47.6%/3.84 CN 32.0%/4.96 HT 7.0%/5.91 ND 10.4%/2.93 QT 3.0%/5.84
+[PASS] C0.2 Q3 NĐTC 2026: DD 43.9%/3.89 CN 31.0%/5.15 HT 12.0%/5.82 ND 10.1%/3.00 QT 3.0%/6.04
+[PASS] C0.2 Q4 NĐTC 2026: DD 43.8%/3.84 CN 31.0%/5.31 HT 12.0%/4.88 ND 10.2%/3.13 QT 3.0%/6.09
+[PASS] C0.2 Q1 NĐTC 2027: DD 41.5%/4.88 CN 29.0%/6.43 HT 17.0%/2.82 ND 9.5%/4.20 QT 3.0%/7.42
+[PASS] C0.2 NĐTC 2025 năm: DD 51.8%/3.12 CN 34.0%/3.84 HT 2.0%/5.12 ND 9.2%/2.34 QT 3.0%/5.28  (mục tiêu 51/34/2/10/3 – 3,3/4,0/5,2/2,4/5,5)
+
+C0.3  Ký mới (tỷ)
+[PASS] C0.3 Q1 NĐTC 2025: tổng 6,500 / 6,500 (9 HĐ) | DD 4,400 CN 1,800 HT 0 ND 0 QT 300
+[PASS] C0.3 Q2 NĐTC 2025: tổng 10,200 / 10,200 (15 HĐ) | DD 3,100 CN 2,800 HT 1,100 ND 2,450 QT 750
+[PASS] C0.3 Q3 NĐTC 2025: tổng 5,700 / 5,700 (12 HĐ) | DD 2,900 CN 2,500 HT 0 ND 0 QT 300
+[PASS] C0.3 Q4 NĐTC 2025: tổng 9,600 / 9,600 (3 HĐ) | DD 9,300 CN 300 HT 0 ND 0 QT 0
+[PASS] C0.3 Q1 NĐTC 2026: tổng 19,300 / 19,300 (26 HĐ) | DD 6,200 CN 6,000 HT 4,200 ND 2,600 QT 300
+[PASS] C0.3 Q2 NĐTC 2026: tổng 18,000 / 18,000 (15 HĐ) | DD 5,800 CN 3,200 HT 6,800 ND 1,900 QT 300
+[PASS] C0.3 Q3 NĐTC 2026: tổng 10,700 / 10,700 (11 HĐ) | DD 3,300 CN 3,000 HT 2,900 ND 1,200 QT 300
+[PASS] C0.3 Q4 NĐTC 2026: tổng 12,300 / 12,300 (18 HĐ) | DD 5,600 CN 1,700 HT 5,000 ND 0 QT 0
+[PASS] C0.3 Q1 NĐTC 2027: tổng 14,500 / 14,500 (13 HĐ) | DD 7,600 CN 2,900 HT 2,600 ND 900 QT 500
+[PASS] C0.3 NĐTC 2026 số HĐ ký mới / của 3 tập đoàn: 70 / 48  (mục tiêu ~70 / ~46)
+[PASS] C0.3 Q1 NĐTC 2027 tỷ trọng ký mới DD từ 3 tập đoàn: 84.4%  (mục tiêu ~78%)
+
+C0.4  Backlog (tỷ)
+[PASS] C0.4 backlog 2024-06-30: 28,055  (mục tiêu 28,000)
+[PASS] C0.4 backlog 2025-06-30: 35,555  (mục tiêu 35,500)
+[PASS] C0.4 backlog 2025-09-30: 51,653  (mục tiêu 51,600)
+[PASS] C0.4 backlog 2025-12-31: 62,546  (mục tiêu 62,500)
+[PASS] C0.4 backlog 2026-03-31: 65,547  (mục tiêu 65,500)
+[PASS] C0.4 backlog 2026-06-30: 69,547  (mục tiêu 69,500)
+[PASS] C0.4 backlog 2026-09-30: 73,379  (mục tiêu 73,300)
+      Backlog 30/09/2026 theo mảng: CN 12.5%, DD 52.1%, HT 25.7%, ND 6.5%, QT 3.2%  (brief DD 44, HT 24, CN 17, ND 10, QT 5 – đã thống nhất lệch ở Checkpoint 2)
+      Backlog 30/09/2026 theo tập đoàn: Tập đoàn Hải Âu 9.8%, Tập đoàn Thịnh An Land 14.1%, Tập đoàn Vạn Hưng 35.9%  (brief VH 26, TA 14, HA 12)
+      Thay đổi HĐ khác theo quý: Q1/2025 +60, Q2/2025 +110, Q3/2025 +95, Q4/2025 +120, Q1/2026 +4,250, Q2/2026 +2,900, Q3/2026 -1,290, Q4/2026 +2,171, Q1/2027 +601  (brief FY25 +385; +4.250 / +2.900 / −1.290 / +2.170 / +600)
+
+C0.5  Baseline 10/2026–6/2027
+[PASS] C0.5 baseline còn lại: 28,799  (mục tiêu 28.700 ±3%)
+
+C0.6  P&L dưới LN gộp
+      Q1/2025: lãi vay 30.0  CP QLDN 96.2  TN khác 4.0  DT TC 90.2  CP TC khác 2.7  thuế 20.5%
+      Q2/2025: lãi vay 34.0  CP QLDN 102.4  TN khác -3.0  DT TC 70.9  CP TC khác 0.0  thuế 20.5%
+      Q3/2025: lãi vay 37.0  CP QLDN 163.4  TN khác 6.0  DT TC 85.7  CP TC khác 0.0  thuế 20.5%
+      Q4/2025: lãi vay 42.0  CP QLDN -22.0  TN khác 5.0  DT TC 55.0  CP TC khác 99.0  thuế 20.7%
+      Q1/2026: lãi vay 45.0  CP QLDN 171.8  TN khác 188.5  DT TC 55.0  CP TC khác 2.6  thuế 20.6%
+      Q2/2026: lãi vay 80.0  CP QLDN 135.8  TN khác 4.0  DT TC 70.2  CP TC khác 2.6  thuế 20.6%
+      Q3/2026: lãi vay 100.0  CP QLDN 99.0  TN khác -6.0  DT TC 69.7  CP TC khác 2.6  thuế 20.5%
+      Q4/2026: lãi vay 126.0  CP QLDN 269.5  TN khác 7.0  DT TC 108.7  CP TC khác 0.0  thuế 19.0%
+      Q1/2027: lãi vay 158.0  CP QLDN 134.8  TN khác 2.0  DT TC 110.0  CP TC khác 0.0  thuế 20.1%
+[PASS] C0.6 lãi vay NĐTC 2026 / Q1 NĐTC 2027: 351.0 / 158.0  (mục tiêu 351 / 158)
+[PASS] C0.6 CP QLDN NĐTC 2026 / Q4 NĐTC 2026: 676.0 / 269.5  (mục tiêu 676 / 271)
+
+C0.7  Ngân quỹ
+[PASS] C0.7 số dư 2025-06: 4,700.0 / 2,200.0 / 300.0 / 7.6  (mục tiêu 4700 / 2200 / 300 / 7.6)
+[PASS] C0.7 số dư 2025-09: 4,300.0 / 2,700.0 / 300.0 / 7.8  (mục tiêu 4300 / 2700 / 300 / 7.8)
+[PASS] C0.7 số dư 2026-06: 7,823.0 / 3,900.0 / 2,050.0 / 8.6  (mục tiêu 7823 / 3900 / 2050 / 8.6)
+[PASS] C0.7 số dư 2026-09: 7,800.0 / 4,300.0 / 2,750.0 / 8.9  (mục tiêu 7800 / 4300 / 2750 / 8.9)
+[PASS] C0.7 LCTT HĐKD Q1 NĐTC 2026 / NĐTC 2026 / Q1 NĐTC 2027: -838.1 / 815.8 / -774.5  (mục tiêu −838,1 / +815,8 / −774,5)
+[PASS] C0.7 dòng tiền dự án − khoản cấp DN ≈ LCTT HĐKD (±10%/quý; cộng lại dự phòng không bằng tiền): mọi quý khớp
+
+C0.8  Phải thu (tỷ)
+[PASS] C0.8 2026-06-30 tổng phải thu (±2%): 14,089  (mục tiêu 14,170)
+[PASS] C0.8 2026-06-30 chưa NT / đã HĐ / giữ lại / dự phòng (±5%): 3,047 / 9,392 / 1,650 / 1,400  (mục tiêu 3,120 / 9,400 / 1,650 / 1,400)
+[PASS] C0.8 2026-09-30 tổng phải thu (±2%): 16,151  (mục tiêu 16,050)
+[PASS] C0.8 2026-09-30 chưa NT / đã HĐ / giữ lại / dự phòng (±5%): 4,790 / 9,611 / 1,750 / 1,400  (mục tiêu 4,650 / 9,650 / 1,750 / 1,400)
+
+C0.9  Kế hoạch
+      KH_NDTC_2026: DT 30,000  LN gộp 1,290  LNST 700
+      KH_NDTC_2027: DT 42,000  LN gộp 2,055  LNST 1,050
+      KH_NDTC_2026 theo mảng: DT 30,000  ký mới 45,000  DT từ HĐ mới 1,800
+      KH_NDTC_2027 theo mảng: DT 42,000  ký mới 60,000  DT từ HĐ mới 3,000
+[PASS] C0.9 KH_NDTC_2027 = 42.000 / 2.055 / 1.050: 42,000 / 2,055 / 1,050
+
+Nhịp mùa vụ
+[PASS] Q3 NĐTC thấp nhất NĐTC 2026 (NĐTC 2025: brief cho Q1 4.644 < Q3 5.004 nên Q1 thấp nhất): True
+[PASS] Tháng 2 thấp nhất năm 2025, 2026: True
+[PASS] Tháng 6 cao nhất mỗi niên độ: True
+[FAIL] Top 10 dự án ≈ 30–40% DT Q1 NĐTC 2027: 43.4%
+[PASS] DT tháng 1.400–4.500 tỷ: 1,301 – 4,170
+
+================ 3. CHẠY THỬ KỊCH BẢN ================
+
+--- S1 ---
+   Q1/2027 Công nghiệp: DT 3,268  biên 6.43%
+   Q1/2027 Dân dụng: DT 4,677  biên 4.88%
+   Q1/2027 Hạ tầng: DT 1,916  biên 2.82%
+   Q1/2027 Nghỉ dưỡng: DT 1,070  biên 4.20%
+   Q1/2027 Quốc tế: DT 338  biên 7.42%
+   Biên HT: Q1/2026 6.2% → Q2/2026 5.9% → Q3/2026 5.8% → Q4/2026 4.9% → Q1/2027 2.8%
+[PASS] S1 DT 11.269 ±0,5%; biên 4,99; HT ~17% & biên ~2,8 (6,2 → 4,9 → 2,8); HT gấp ~4,3 lần: DT 11,269, biên 4.99%, HT 17.0% biên 2.82%, gấp 4.3 lần
+
+--- S2 ---
+   HT-2601: DT 579  biên DT 6.00 → TT 0.37%  hụt 32.6
+   HT-2504: DT 471  biên DT 6.00 → TT 0.58%  hụt 25.6
+   HT-2605: DT 254  biên DT 5.80 → TT 4.31%  hụt 3.8
+   ND-2601: DT 205  biên DT 4.20 → TT 2.91%  hụt 2.7
+   DD-2506: DT 385  biên DT 4.30 → TT 3.91%  hụt 1.5
+   CN-2512-2: DT 238  biên DT 5.80 → TT 5.21%  hụt 1.4
+   vượt TP-COC / Phát sinh chờ duyệt: 29.0 tỷ
+   vượt VT-THEP / Phạm vi hợp đồng: 18.2 tỷ
+   vượt CPC / Phạm vi hợp đồng: 11.1 tỷ
+   vượt VT-BETONG / Phạm vi hợp đồng: 2.9 tỷ
+   Đơn giá thép TT Q1: 15,880 đ/kg (dự toán 14.600); VO: 4 hồ sơ, đề nghị 52.0, chi phí đã bỏ 37.0, chờ duyệt 4; thầu phụ đã duyệt 46.0
+[PASS] S2 2 gói sân bay đứng đầu, hụt 55–63, biên 0,4–1,0; cọc ~29, thép ~18, CPC ~12; VO 52/37; thầu phụ 46: top ['HT-2504', 'HT-2601'], hụt 58.2, DT 1,050, biên 0.46%
+   EAC 9/2026: HT-2504 3.60%, HT-2601 3.00%
+[PASS] S2 follow-up: HT-2603/2605/2608 backlog ~7.900: 7,708
+
+--- S3 ---
+   Tập đoàn Hải Âu 2026-09-30: chưa NT 1,789  tổng 2,777
+   Tập đoàn Vạn Hưng 2026-09-30: chưa NT 1,357  tổng 4,271
+   Tập đoàn Vạn Hưng 2026-06-30: chưa NT 1,083  tổng 3,894
+   Tập đoàn Hải Âu 2026-06-30: chưa NT 750  tổng 2,109
+   Tập đoàn Thịnh An Land 2026-09-30: chưa NT 493  tổng 1,459
+   Tổng công ty Hạ tầng Hàng không Đông Nam 2026-09-30: chưa NT 185  tổng 785
+   HA nộp 2026-01 CS-03: 5 hồ sơ, ký bq 21.4000 ngày, bị trả 0%, chưa ký 0%
+   HA nộp 2026-02 CS-03: 5 hồ sơ, ký bq 20.0000 ngày, bị trả 40%, chưa ký 0%
+   HA nộp 2026-03 CS-03: 5 hồ sơ, ký bq 20.2000 ngày, bị trả 0%, chưa ký 0%
+   HA nộp 2026-04 CS-03: 6 hồ sơ, ký bq 19.5000 ngày, bị trả 33%, chưa ký 0%
+   HA nộp 2026-05 CS-03: 7 hồ sơ, ký bq 19.0000 ngày, bị trả 14%, chưa ký 0%
+   HA nộp 2026-06 CS-03: 7 hồ sơ, ký bq 20.2857 ngày, bị trả 0%, chưa ký 0%
+   HA nộp 2026-07 CS-11: 7 hồ sơ, ký bq 51.6000 ngày, bị trả 43%, chưa ký 43%
+   HA nộp 2026-08 CS-11: 7 hồ sơ, ký bq 48.6000 ngày, bị trả 43%, chưa ký 27%
+   HA nộp 2026-09 CS-11: 6 hồ sơ, ký bq NULL ngày, bị trả 50%, chưa ký 100%
+   Ký NT bq NĐTC 2026 15% trả; trước 7/2026 19.7 ngày; HS 7/2026 52 ngày; từ 7/2026 trả 45%, chưa ký 56% giá trị
+   Lý do trả: Thiếu biên bản nghiệm thu nội bộ theo mẫu mới 3, Đối chiếu lại khối lượng với bản vẽ hoàn công 3, Khác 2, Chờ TVGS xác nhận hiện trường 1 | DSO sau HĐ của HA 46 ngày | DT HA 16.6% DT Q1 | dòng tiền nhóm HA Q1 -638
+[FAIL] S3 chưa NT 3.120→4.650; Hải Âu chiếm đa số phần tăng; trả ~41%; ký ~52 ngày; CFO −774,5: 3,047→4,790; HA 750→1,789 (60% phần tăng); CFO -774.5
+
+--- S4 ---
+   PV còn lại 28,799; theo SPI 27,204 (chênh -1,595: miền Bắc -1,066, sân bay -504, còn lại -25)
+   Nhân công T9 3 dự án: CN-2603 75%, DD-2501 76%, DD-2512 74% (chung 75%); SPI quý 0.86; ngày công YoY: Miền Bắc +13.7%, Miền Nam +6.0%, Miền Trung +5.0%
+   Dự báo NĐTC 2027 ≈ 11.269 + 27,204 + 2.250 (HĐ ký mới) = 40,723 tỷ = 97.0% KH
+[PASS] S4 PV 28.700 ±3%; theo SPI thấp hơn ~1.600–1.850; 3 dự án miền Bắc 76% nhân công T9: PV 28,799, chênh 1,595, nhân công 75%, dự báo 40,723
+
+--- S5 ---
+   CN-NM truoc: 55 gói, trúng 16, thắng 38.0% giá trị, markup 6.04, trượt vì giá 41%
+   CN-NM sau: 34 gói, trúng 5, thắng 18.0% giá trị, markup 7.84, trượt vì giá 72%
+   Pipeline: Đang chuẩn bị 27,162, Chờ kết quả 35,136, Đang đàm phán 5,702 | tổng 68,000, có KQ trước 31/3/2027 59,500
+   Tỷ lệ thắng theo giá trị (7/2025–9/2026): DD 52%, CN-NM 33%, CN-DC 45%, HT 24%, CN-KHO 35%, QT 18%, ND 40%
+[PASS] S5 CN-NM 38%→18%, markup 6,0→7,8, trượt vì giá ~74%; pipeline ~68.000 / ~59.500: 38%→18%, pipeline 68,000/59,500
+
+--- S6 ---
+[PASS] S6 Q1 DT 11.269, LNST 305; KH 42.000 / 1.050; backlog ~73.300: 11,269.0 / 305.0 / 42,000.0 / 1,050.0 / 73,378.8
+   HĐ ký Q2 NĐTC 2026 đã ghi nhận đến 30/6/2026: CN 33%, DD 10%, HT 9%, ND 26%, QT 21%  (brief: CN ~35%, DD cao tầng ~7%)
+
+--- Chart: 27 tháng ---
+[PASS] Đủ 27 tháng dữ liệu: 27
+
+================ 4. FALLBACK ================
+   DT & biên theo BU NĐTC 2026: Business Unit 01 – Hạ tầng, đầu tư công & FDI 12,454 (5.22%); Khối Dân dụng phía Nam 9,931 (3.82%); Unicons 6,551 (3.73%); Khối Dân dụng phía Bắc 4,373 (4.38%); Coteccons Quốc tế 1,030 (5.99%)
+   Tỷ trọng BU Q1 NĐTC 2027: BU01 41.0%, BU-DDN 23.4%, UNC 18.0%, BU-DDB 14.6%, INTL 3.0%  (brief BU01 40, DDN 25, UNC 19, DDB 13, INTL 3)
+   Vùng NĐTC 2026 (% DT trong nước): Miền Nam 57.1%, Miền Bắc 28.6%, Miền Trung 14.3%  (brief Nam 56, Bắc 32, Trung 12)
+   Top tỉnh NĐTC 2026: TP. Hồ Chí Minh 27.5%, Hà Nội 14.7%, Đồng Nai 14.7%, Đà Nẵng 6.4%, Hải Phòng 6.1%, An Giang 6.1%  (brief HCM ~30, HN ~14, BN/ĐN/HY 4–7)
+   Quốc tế theo quốc gia: Ấn Độ 2 DA 1,240, Campuchia 5 DA 428, Đài Loan 3 DA 447
+   LTIFR theo quý: 0.25, 0.17, 0.26, 0.25, 0.16, 0.24, 0.28, 0.25, 0.26
+[PASS] LTIFR 0,15–0,35: 0.16–0.28
+[PASS] Công nhân bình quân 2026 28.000–34.000: 28,612 (tháng 2 thấp nhất do Tết)
+   Phát sinh theo nguyên nhân: Yêu cầu bổ sung của CĐT 229 HS 999 tỷ, Thay đổi thiết kế 209 HS 1,130 tỷ, Địa chất hoặc điều kiện hiện trường 94 HS 472 tỷ, Biến động giá 31 HS 193 tỷ, Khác 53 HS 303 tỷ
+   Tỷ lệ duyệt phát sinh theo giá trị (đã có quyết định): 90%
+   Giá đầu vào (Nam): CAT_XAYDUNG 380,000→520,000, NC_COPPHA 490,000→556,400, THEP_CB400 14,200→16,100
+[PASS] Không có DT ≤ 0 bất thường: 0
+   Trạng thái dự án 30/09/2026: Đã bàn giao 70, Đang thi công 105, Tạm dừng 3, Chưa khởi công 9
+
+TỔNG: 77/79 PASS
+FAIL: Top 10 dự án ≈ 30–40% DT Q1 NĐTC 2027; S3 chưa NT 3.120→4.650; Hải Âu chiếm đa số phần tăng; trả ~41%; ký ~52 ngày; CFO −774,5
